@@ -1,0 +1,53 @@
+I"y<h2 id="what-is-a-python-egg">What is a Python egg?</h2>
+<p>A Python egg is a structure embodying the release of a specific version of a Python module, comprising its code, resources and metadata. It needs to be <strong>importable</strong> and <strong>discoverable</strong>.</p>
+
+<p>There are two basic formats currently implemented for Python eggs:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">.egg</code>: a directory or zipfile containing the module’s code and resources, along with a <code class="language-plaintext highlighter-rouge">EGG-info</code> subdirectory that contains the module’s metadata</li>
+  <li><code class="language-plaintext highlighter-rouge">.egg-info</code>: a directory contains module’s metadata.</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">.egg</code> file?</p>
+
+<h3 id="how-to-create-an-egg-setuppy">How to create an egg (<code class="language-plaintext highlighter-rouge">setup.py</code>)?</h3>
+<p>To create an .egg file for a directory say mymath which itself may have several python scripts, do the following step</p>
+<h3 id="how-to-run-the-egg-file">How to run the egg file?</h3>
+<p>if you have an .egg file, you can install it as a package using <code class="language-plaintext highlighter-rouge">easy_install</code></p>
+
+<h3 id="egg-info"><code class="language-plaintext highlighter-rouge">egg-info</code>?</h3>
+
+<h3 id="__init__py"><code class="language-plaintext highlighter-rouge">__init__.py</code>?</h3>
+
+<h2 id="module-not-found-problem">Module not found problem</h2>
+<p>Sometimes when we type <code class="language-plaintext highlighter-rouge">import &lt;module_1&gt;</code> at the interactive Python console, we see the following error <code class="language-plaintext highlighter-rouge">ModuleNotFoundError: No module named "&lt;module_1&gt;</code>.</p>
+
+<p><strong>Where does Python look for modules?</strong></p>
+
+<p>Python looks for modules in <code class="language-plaintext highlighter-rouge">sys.path</code>. To check <code class="language-plaintext highlighter-rouge">sys.path</code>, open a Python console, type</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import sys
+print(sys.path): returns a list of paths
+</code></pre></div></div>
+<p>To include the module’d directory inside the <code class="language-plaintext highlighter-rouge">sys.path</code> list, we can use one of the following methods:</p>
+<ol>
+  <li>put the directory into the contents of <code class="language-plaintext highlighter-rouge">PYTHONPATH</code> environment variable</li>
+  <li>make the module part of an installable package, and install it.</li>
+</ol>
+
+<p>In the following sections, we discuss in details how to add a directory on the Python <code class="language-plaintext highlighter-rouge">sys.path</code> list.</p>
+
+<p><strong>Methods to add a module</strong></p>
+
+<ul>
+  <li>Method 1: Append the path to <code class="language-plaintext highlighter-rouge">PYTHONPATH</code></li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">export PYTHONPATH=&lt;path to your package&gt;:$PYTHONPATH</code></p>
+
+<ul>
+  <li>Method2: add to .bashrc</li>
+</ul>
+
+<h2 id="comments">Comments</h2>
+<p>I encounter this problem twice during my work. First time was I missed to add <code class="language-plaintext highlighter-rouge">__init__.py</code> in the folder. Second time is that I messed up the folder structure, and I noticed that the package name showed up in the <code class="language-plaintext highlighter-rouge">pip list</code>, but cause the <code class="language-plaintext highlighter-rouge">Import Error: Module not found</code> in the python terminal.</p>
+
+:ET

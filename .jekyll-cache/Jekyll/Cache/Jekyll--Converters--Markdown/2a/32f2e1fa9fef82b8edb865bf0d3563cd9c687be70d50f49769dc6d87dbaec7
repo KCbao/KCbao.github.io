@@ -1,0 +1,6 @@
+I"Q<h2 id="list-files-and-folders-in-the-current-directory">List files and folders in the current directory</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import os
+arr = os.listdir("&lt;dir to work on&gt;")
+print(arr) =&gt; ['3ebooks.txt', 'documents']
+</code></pre></div></div>
+:ET

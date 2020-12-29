@@ -1,0 +1,3 @@
+I"<h2 id="what-is-a-python-egg">What is a Python egg?</h2>
+<p>A Python egg is a structure embodying the release of a specific version of a Python module, comprising its code, resources and metadata. It needs to be <strong>importable</strong> and <strong>discoverable</strong>.</p>
+:ET

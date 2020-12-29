@@ -1,0 +1,15 @@
+I"<h2 id="list-files-and-folders-in-the-current-directory">List files and folders in the current directory</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import os
+arr = os.listdir("&lt;dir to work on&gt;")
+print(arr) =&gt; ['3ebooks.txt', 'documents']
+</code></pre></div></div>
+
+<h2 id="arguments">arguments</h2>
+<p>For a function <code class="language-plaintext highlighter-rouge">def example(a,b, c=None, r="w", d=[], *ae, **ab)</code>, the correct order of defining parameters are:</p>
+<ol>
+  <li>positional paramter or non-default parameter (e.g., <code class="language-plaintext highlighter-rouge">a,b</code>)</li>
+  <li>keyword parameter or default parameter (e.g., <code class="language-plaintext highlighter-rouge">r="w", d=[]</code>)</li>
+  <li>keyword-only parameter (e.g., <code class="language-plaintext highlighter-rouge">*args</code>)</li>
+  <li>var-keyword parameter (e.g., <code class="language-plaintext highlighter-rouge">**kwargs</code>)</li>
+</ol>
+:ET

@@ -1,0 +1,3 @@
+I"ß<h2 id="what-is-argparse">What is argparse?</h2>
+<p>The Python <code class="language-plaintext highlighter-rouge">argparse</code> module defines what arguments it requires, and <code class="language-plaintext highlighter-rouge">argparse</code> will figure out how to parse those out of <code class="language-plaintext highlighter-rouge">sys.argv</code>. It also automatically generates help and usage messages and issues errors when users give the program incalid arguments.</p>
+:ET

@@ -1,0 +1,32 @@
+I"9<h2 id="path">PATH</h2>
+
+<p><strong>What is PATH</strong></p>
+
+<p>When you wish to install programs into other locations on your host, but be able to execute them easily without specifying their exact location. This can be easily done by adding a directory to your <code class="language-plaintext highlighter-rouge">$PATH</code>.</p>
+
+<p><strong>View PATH</strong></p>
+
+<p><code class="language-plaintext highlighter-rouge">echo $PATH</code></p>
+
+<p><strong>Install packages and add to path</strong></p>
+
+<ol>
+  <li>temporarily set path <code class="language-plaintext highlighter-rouge">export PATH=&lt;your-dir&gt;:$PATH</code></li>
+  <li>permenantly set path: add <code class="language-plaintext highlighter-rouge">export PATH=&lt;your-dir&gt;:$PATH</code> in <code class="language-plaintext highlighter-rouge">.bashrc</code>. Then restart the terminal.</li>
+</ol>
+
+<h2 id="which-vs-whereis"><code class="language-plaintext highlighter-rouge">which</code> vs <code class="language-plaintext highlighter-rouge">whereis</code></h2>
+
+<p><strong>which</strong>: returns the pathnames of the file which would be executed in the current enviroment</p>
+
+<p><strong>whereis</strong>: searches for binary/source and manual page files.</p>
+
+<p>For example,</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>whereis php =&gt; php: /usr/bin/php /usr/share/php /usr/share/man/man1/php.1.gz
+
+# the php is executable, and some other stuff (e.g., man pages)
+
+which php =&gt; /usr/bin/php
+# returns only the php executable. 
+</code></pre></div></div>
+:ET

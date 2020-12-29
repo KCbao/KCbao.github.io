@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Python Modules</title>
+  <meta name="description" content="What is a Python egg?A Python egg is a structure embodying the release of a specific version of a Python module, comprising its code, resources and metadata. It needs to be importable and discovera...">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Python Modules">
+  <meta name="twitter:description" content="What is a Python egg?A Python egg is a structure embodying the release of a specific version of a Python module, comprising its code, resources and metadata. It needs to be importable and discovera...">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Python Modules">
+  <meta property="og:description" content="What is a Python egg?A Python egg is a structure embodying the release of a specific version of a Python module, comprising its code, resources and metadata. It needs to be importable and discovera...">
+  
+  <!-- <link rel="icon" type="image/png" href="/assets/images/favicon.png" /> -->
+  <!-- <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png"> -->
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2020/10/PythonModules/">
+  <link rel="alternate" type="application/rss+xml" title="Casie Bao" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="http://localhost:4000/#blog" title="前往 Casie Bao 的主页" class="blog-button"></a>
+        <h1 class="panel-cover__title panel-title"><a href="http://localhost:4000/#blog" title="link to homepage for Casie Bao" class="blog-button">Casie Bao</a></h1>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">All the lights we cannot see</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="Visit blog" class="blog-button">Blog</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/KCbao" title="@KCbao 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+
+  
+  <!-- LinkedIn -->
+  <li class="navigation__item">
+    <a href="https://www.linkedin.com/in/anyi-casie-bao-78186aa7" title="@anyi-casie-bao-78186aa7" target="_blank">
+      <i class='social fa fa-linkedin'></i>
+      <span class="label">LinkedIn</span>
+    </a>
+  </li>
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-disabled"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2020-10-21 11:18:12 -0700" itemprop="datePublished" class="post-meta__date date">2020-10-21</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">Python Modules</h1>
+  </header>
+
+  <section class="post">
+    <h2 id="what-is-a-python-egg">What is a Python egg?</h2>
+<p>A Python egg is a structure embodying the release of a specific version of a Python module, comprising its code, resources and metadata. It needs to be <strong>importable</strong> and <strong>discoverable</strong>.</p>
+
+<p>There are two basic formats currently implemented for Python eggs:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">.egg</code>: a directory or zipfile containing the module’s code and resources, along with a <code class="language-plaintext highlighter-rouge">EGG-info</code> subdirectory that contains the module’s metadata</li>
+  <li><code class="language-plaintext highlighter-rouge">.egg-info</code>: a directory contains module’s metadata.</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">.egg</code> file?</p>
+
+<h3 id="how-to-create-an-egg-setuppy">How to create an egg (<code class="language-plaintext highlighter-rouge">setup.py</code>)?</h3>
+<p>To create an .egg file for a directory say mymath which itself may have several python scripts, do the following step</p>
+<h3 id="how-to-run-the-egg-file">How to run the egg file?</h3>
+<p>if you have an .egg file, you can install it as a package using <code class="language-plaintext highlighter-rouge">easy_install</code></p>
+
+<h3 id="egg-info"><code class="language-plaintext highlighter-rouge">egg-info</code>?</h3>
+
+<h3 id="__init__py"><code class="language-plaintext highlighter-rouge">__init__.py</code>?</h3>
+
+<h2 id="module-not-found-problem">Module not found problem</h2>
+<p>Sometimes when we type <code class="language-plaintext highlighter-rouge">import &lt;module_1&gt;</code> at the interactive Python console, we see the following error <code class="language-plaintext highlighter-rouge">ModuleNotFoundError: No module named "&lt;module_1&gt;</code>.</p>
+
+<p><strong>Where does Python look for modules?</strong></p>
+
+<p>Python looks for modules in <code class="language-plaintext highlighter-rouge">sys.path</code>. To check <code class="language-plaintext highlighter-rouge">sys.path</code>, open a Python console, type</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import sys
+print(sys.path): returns a list of paths
+</code></pre></div></div>
+<p>To include the module’d directory inside the <code class="language-plaintext highlighter-rouge">sys.path</code> list, we can use one of the following methods:</p>
+<ol>
+  <li>put the directory into the contents of <code class="language-plaintext highlighter-rouge">PYTHONPATH</code> environment variable</li>
+  <li>make the module part of an installable package, and install it.</li>
+</ol>
+
+<p>In the following sections, we discuss in details how to add a directory on the Python <code class="language-plaintext highlighter-rouge">sys.path</code> list.</p>
+
+<p><strong>Methods to add a module</strong></p>
+
+<ul>
+  <li>Method 1: Append the path to <code class="language-plaintext highlighter-rouge">PYTHONPATH</code></li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">export PYTHONPATH=&lt;path to your package&gt;:$PYTHONPATH</code></p>
+
+<ul>
+  <li>Method2: add to .bashrc</li>
+</ul>
+
+<h2 id="comments">Comments</h2>
+<p>I encounter this problem twice during my work. First time was I missed to add <code class="language-plaintext highlighter-rouge">__init__.py</code> in the folder. Second time is that I messed up the folder structure, and I noticed that the package name showed up in the <code class="language-plaintext highlighter-rouge">pip list</code>, but cause the <code class="language-plaintext highlighter-rouge">Import Error: Module not found</code> in the python terminal.</p>
+
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">Latest Articles</span>
+       <h2 class="post-list__post-title post-title"><a href="/2020/11/python/" title="link to Python tricks">Python tricks</a></h2>
+       <p class="excerpt">List files and folders in the current directoryimport osarr = os.listdir("&lt;dir to work on&gt;")print(arr) =&gt; ['3ebooks.txt', 'documents']argumentsFor a function def example(a,b, c=None, r="w"...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2020-11-09 09:22:12 -0800" class="post-list__meta--date date">2020-11-09</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2020/11/python/>Read More</a></div>
+   </div>
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">Eariler Articles</span>
+       <h2 class="post-list__post-title post-title"><a href="/2020/10/Bash/" title="link to Bash">Bash</a></h2>
+       <p class="excerpt">PATHWhat is PATHWhen you wish to install programs into other locations on your host, but be able to execute them easily without specifying their exact location. This can be easily done by adding a ...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2020-10-21 11:18:12 -0700" class="post-list__meta--date date">2020-10-21</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2020/10/Bash/>Read More</a></div>
+   </div>
+   
+</section>
+
+
+            <section class="footer">
+    <footer></footer>
+    
+        <span class="footer__copyright"> &copy; 2020 Casie Bao</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

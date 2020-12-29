@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Responsive Design</title>
+  <meta name="description" content="Main idea: write codes in the dymanic design so that it is resizable and suitable for different devices.">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Responsive Design">
+  <meta name="twitter:description" content="Main idea: write codes in the dymanic design so that it is resizable and suitable for different devices.">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Responsive Design">
+  <meta property="og:description" content="Main idea: write codes in the dymanic design so that it is resizable and suitable for different devices.">
+  
+  <!-- <link rel="icon" type="image/png" href="/assets/images/favicon.png" /> -->
+  <!-- <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png"> -->
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2020/12/ResponsiveDesign/">
+  <link rel="alternate" type="application/rss+xml" title="Casie Bao" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="http://localhost:4000/#blog" title="前往 Casie Bao 的主页" class="blog-button"></a>
+        <h1 class="panel-cover__title panel-title"><a href="http://localhost:4000/#blog" title="link to homepage for Casie Bao" class="blog-button">Casie Bao</a></h1>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">All the lights we cannot see</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="Visit blog" class="blog-button">Blog</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/KCbao" title="@KCbao 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+
+  
+  <!-- LinkedIn -->
+  <li class="navigation__item">
+    <a href="https://www.linkedin.com/in/anyi-casie-bao-78186aa7" title="@anyi-casie-bao-78186aa7" target="_blank">
+      <i class='social fa fa-linkedin'></i>
+      <span class="label">LinkedIn</span>
+    </a>
+  </li>
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-disabled"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2020-12-10 10:18:12 -0800" itemprop="datePublished" class="post-meta__date date">2020-12-10</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">Responsive Design</h1>
+  </header>
+
+  <section class="post">
+    <p>Main idea: write codes in the dymanic design so that it is resizable and suitable for different devices.</p>
+
+<p>Best Practice:</p>
+<ul>
+  <li>Relative Units: auto-resize app depending on which devices sitting on, %, em, rem, vh (viewport height), vw (viewport width).</li>
+  <li>Media Queries: Material UI has media queries.</li>
+  <li>Grid system</li>
+</ul>
+
+<p>How to implement responsive design?</p>
+<ul>
+  <li>Step 1: <code class="language-plaintext highlighter-rouge">import useMediaQuery from "@material-ui/core/useMediaQuery</code></li>
+  <li>Step 2: set theme and matchesSM. <code class="language-plaintext highlighter-rouge">const theme = useTheme();const matchesSM = useMediaQuery(theme.breakpoints.up('sm'));</code>.</li>
+  <li>Step 3: set breakpoint. e.g., under grid 
+<code class="language-plaintext highlighter-rouge">&lt;Grid item style=&gt;</code>, <code class="language-plaintext highlighter-rouge">matchesSM</code> is a Bool. So the marginTop changes with <code class="language-plaintext highlighter-rouge">matchesSM</code>, if <code class="language-plaintext highlighter-rouge">matchesSM</code> is true, marginTop is 5em, elsewise it is 3em. It can be also used in Grid container. e.g., <code class="language-plaintext highlighter-rouge">&lt;Grid container direction={matchesSM ? "column" : "row"}&gt;</code>.</li>
+</ul>
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">Eariler Articles</span>
+       <h2 class="post-list__post-title post-title"><a href="/2020/12/Leetcode/" title="link to Leetcode">Leetcode</a></h2>
+       <p class="excerpt">Top Interview Questions (145 Questions)  主要思路：  知识点：  细节：2. Add two sums (medium)      主要思路： create a parent linked-list, and a child/dummy linked-list, dummy linked-list is moving ahead to update ...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2020-12-10 10:18:12 -0800" class="post-list__meta--date date">2020-12-10</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2020/12/Leetcode/>Read More</a></div>
+   </div>
+   
+</section>
+
+
+            <section class="footer">
+    <footer></footer>
+    
+        <span class="footer__copyright"> &copy; 2020 Casie Bao</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

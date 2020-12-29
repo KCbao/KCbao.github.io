@@ -1,0 +1,17 @@
+I"g<p>Main idea: write codes in the dymanic design so that it is resizable and suitable for different devices.</p>
+
+<p>Best Practice:</p>
+<ul>
+  <li>Relative Units: auto-resize app depending on which devices sitting on, %, em, rem, vh (viewport height), vw (viewport width).</li>
+  <li>Media Queries: Material UI has media queries.</li>
+  <li>Grid system</li>
+</ul>
+
+<p>How to implement responsive design?</p>
+<ul>
+  <li>Step 1: <code class="language-plaintext highlighter-rouge">import useMediaQuery from "@material-ui/core/useMediaQuery</code></li>
+  <li>Step 2: set theme and matchesSM. <code class="language-plaintext highlighter-rouge">const theme = useTheme();const matchesSM = useMediaQuery(theme.breakpoints.up('sm'));</code>.</li>
+  <li>Step 3: set breakpoint. e.g., under grid 
+<code class="language-plaintext highlighter-rouge">&lt;Grid item style={{marginTop: matchesSM ? "5em": "3em"}}&gt;</code>, <code class="language-plaintext highlighter-rouge">matchesSM</code> is a Bool. So the marginTop changes with <code class="language-plaintext highlighter-rouge">matchesSM</code>, if <code class="language-plaintext highlighter-rouge">matchesSM</code> is true, marginTop is 5em, elsewise it is 3em. It can be also used in Grid container. e.g., <code class="language-plaintext highlighter-rouge">&lt;Grid container direction={matchesSM ? "column" : "row"}&gt;</code>.</li>
+</ul>
+:ET

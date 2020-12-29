@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>HTTP</title>
+  <meta name="description" content="IntroductionHTTP is a TCP/IP based communication protocol, used to deliver data, such as HTML files, images, query results etc., on the World Wide Web. HTTP specification specifies how client’s req...">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="HTTP">
+  <meta name="twitter:description" content="IntroductionHTTP is a TCP/IP based communication protocol, used to deliver data, such as HTML files, images, query results etc., on the World Wide Web. HTTP specification specifies how client’s req...">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="HTTP">
+  <meta property="og:description" content="IntroductionHTTP is a TCP/IP based communication protocol, used to deliver data, such as HTML files, images, query results etc., on the World Wide Web. HTTP specification specifies how client’s req...">
+  
+  <!-- <link rel="icon" type="image/png" href="/assets/images/favicon.png" /> -->
+  <!-- <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png"> -->
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2020/10/HTTP/">
+  <link rel="alternate" type="application/rss+xml" title="Casie Bao" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="http://localhost:4000/#blog" title="前往 Casie Bao 的主页" class="blog-button"></a>
+        <h1 class="panel-cover__title panel-title"><a href="http://localhost:4000/#blog" title="link to homepage for Casie Bao" class="blog-button">Casie Bao</a></h1>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">All the lights we cannot see</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="Visit blog" class="blog-button">Blog</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/KCbao" title="@KCbao 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+
+  
+  <!-- LinkedIn -->
+  <li class="navigation__item">
+    <a href="https://www.linkedin.com/in/anyi-casie-bao-78186aa7" title="@anyi-casie-bao-78186aa7" target="_blank">
+      <i class='social fa fa-linkedin'></i>
+      <span class="label">LinkedIn</span>
+    </a>
+  </li>
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-disabled"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2020-10-18 16:39:12 -0700" itemprop="datePublished" class="post-meta__date date">2020-10-18</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">HTTP</h1>
+  </header>
+
+  <section class="post">
+    <h2 id="introduction">Introduction</h2>
+<p>HTTP is a TCP/IP based communication protocol, used to deliver data, such as HTML files, images, query results etc., on the World Wide Web. HTTP specification specifies how client’s request data will be constructed and send to the server, and how the servers respond to these requests. It has the following benefits:</p>
+
+<ul>
+  <li>stateless: clients and servers are aware of each other only during a current request. The HTTP client initiates an HTTP request, and after the request made, the client waits for the response. The server processes the request and sends a response back after which client disconnect and both of them forget about each other.</li>
+  <li>HTTP has two versions. HTTP/1.0 and HTTP/1.1 (HTTP/2.0 just came up and we will skip that in this post). HTTP/1.0 uses a new connection for each request/response exchange. <strong>HTTP/1.1 differs from it as the same connection can be used for more than one resquest/response exchanges.</strong></li>
+</ul>
+
+<h2 id="http-parameters">HTTP Parameters</h2>
+<p>The following are important parameters:</p>
+<ul>
+  <li>HTTP version</li>
+  <li>URI: it is case-insensitive</li>
+  <li>Date/Time Formats: all HTTP data/time stamps must be in GMT.</li>
+  <li>Character sets: it specifies the character sets the client prefer. By default, it uses US-ASCII. Users can also change into ISO-8859-1 or ISO-8859-7.</li>
+  <li>Content encodings: it specifies an encoding algorithm that has been used to encode the content before passing it over the network. It allows a doc to be compressed or usefully transformed without losing the identity.</li>
+  <li>Media types: HTTP uses “Content-Type” and “Accept” header fields in order to provides open and extensible data typing and type negotiation. The general syntax to specify a media type is “type/subtype”. For example, “image/gif”, “text/html”. These types’ name are case-insensitive.</li>
+  <li>Language tags: HTTP uses language tags within the “Accept-Language” and “Content-Language” fields. The general syntax is “primary tag-(subtag)”. For instance, “en”, “en-us”, “en-cockney”.</li>
+</ul>
+
+<h2 id="http-client">HTTP Client</h2>
+<p>A HTTP client is a program that establishes a connection to a server for the purpose of sending HTTP request messages. For example, a HTTP client can be a web browser or any other client.</p>
+
+<p>A HTTP request message has the following format:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;A request line&gt;
+&lt;zero of more (General/Request/entity) Fields&gt;
+&lt;empty line&gt;
+&lt;optionally a message body&gt;
+</code></pre></div></div>
+
+<h3 id="a-request-line">A request line</h3>
+<p>The general syntax for a request line is “<HTTP Method=""> SP <Request URI=""> SP HTTP-version <CRLF>" where SP stands for separator, and CRLF means a line feed "\n". For example, "GET /hello.html HTTP/1.1".</CRLF></Request></HTTP></p>
+
+<ul>
+  <li>HTTP Method: GET/POST/PUT/DELETE</li>
+  <li>Request URI: used to establish a tunnel to the server identified by the URI</li>
+</ul>
+
+<h2 id="http-server">HTTP Server</h2>
+<p>A HTTP server is a program that accepts connections in order to serve HTTP requests by sending HTTP response messages. For example, it can be a web server like Apache.</p>
+
+<p>A HTTP response includes  the HTTP version, a status code, and a MIME-like message containing server information, entity meta information etc.</p>
+
+<p>A HTTP response message has the following format:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;A status line&gt;
+&lt;zero of more (General/Response/entity)-Header Fields&gt;
+&lt;empty line&gt;
+&lt;optionally a message body&gt;
+</code></pre></div></div>
+<h3 id="status-line">Status line</h3>
+<p>A status line has the general syntax “<HTTP Version=""> SP <Status code=""> SP <Reason-phrase> CRLF", where the status code is a 3-digit integer, and reason phrase is to disply error condition. For example, a status line is "HTTP/1.1 404 Not Found."</Reason-phrase></Status></HTTP></p>
+
+<h3 id="response-field">Response Field</h3>
+<p>Response fields give information about the server and about further access to the resource identified by the request URI (e.g., further access includes proxy authenticate etc.).</p>
+
+<h2 id="general-header-fields">General-Header Fields</h2>
+<p>Below are some important fields specified in the general fields section.</p>
+
+<ul>
+  <li>Cache-Control: the goal is to eliminate the need to send requests in many cases and to eliminate the need to send full responses in many cases. Thus, to improve the performance. It is either a “cache-request-directive” or “cache-response-directive” to specify parameters for the cache or to request certain kinds of documents from the cache. For example, “cache-control: no-cache” means a cache must not use the response to satisfy a subsequent request without successfully revalidation with the origin server. (NOT clear, need to rewrite)</li>
+  <li>Connection: it is either “close” or “keep-alive”. Close means that a connection will be closed after completion of the response. On the other hand, HTTP/1.1 by default uses persistent connection, where connection doesn’t automately closed after a transaction. So a “keep-alive” status is shown.</li>
+  <li>Date</li>
+  <li>Upgrade: allows the client to specify what additional communication protocols it supports and would like to use it if the server finds it appropriate to switch protocols. For example, “upgrade: HTTP/2.0”. Note that for websocket protocols, it is based on HTTP protocols with an additional upgrade included in header to indicate it is for websockets. (NOT CLEAR, NEED RE_WRITE)</li>
+</ul>
+
+<h2 id="client-request-header-fields">Client Request-Header Fields</h2>
+<ul>
+  <li>Authentization: credentials consists of credentials containing the authentication information of the user agent.</li>
+  <li>cookie: contains a name/value pair of information stored for that URI. For example: “Cookie: <name1>=<value1>"</value1></name1></li>
+  <li>Host: to specify the internet host and port of the resources being requested. By default is port 80. For example, a request line is “GET /pub/www HTTP/1.1” and host-header is “HOST: www.w3.org”. It is a request on the origin server for “www.w3.org/pub/www”.</li>
+</ul>
+
+<h2 id="server-response-header-fields">Server Response-Header Fields</h2>
+<ul>
+  <li>Via: be used by gateways and proxies to indicate the intermediate protocols and recipicents. For example, “Via: 1.0 fred 1.1 nowhere.com (Apache/1.1)”. It is a request message send from an HTTP/1.0 user agent to an interal proxy named “fred”, which uses a HTTP/1.1 to forward the request to a public proxy “nowhere.com”, which completes a request by forwarding it to the origin server “www.ics.uci.edu”. The request is received by “www.ics.uci.edu” have the above “Via” header field. It has the general syntax “Via: [ <protocol-name> "/" ] <protocol-version> <host> [ ":" <port> ]", where "<host>" defines the public proxy URL and port.</host></port></host></protocol-version></protocol-name></li>
+</ul>
+
+<h2 id="entity-header-fields">Entity-Header Fields</h2>
+<p>It defineds meta information about the entity body or if no body is present, it is about the resource identified by the request.</p>
+
+<p>Below are some important entity-headers:</p>
+<ul>
+  <li>Allow: list the set of methods supported by the resource identified by the URI. e.g., “Allow: GET, PUT”</li>
+  <li>Content-Type</li>
+  <li>Content-Encoding</li>
+  <li>Content-Language</li>
+  <li>Content-Location: supply the source location for the entity enclosed in the message when entity is accessible from a location separated from the requested resources URI. (NEED CLARIFICATION, for example, in db)</li>
+</ul>
+
+<h2 id="message-body">Message Body</h2>
+<p>The message body part is optionally for an HTTP message. But if it is available, then it is used to carry the entity-body associated with the request or response. If entity-body is associated, usually “Content-Type” and “Content-Length” headers lines specify the nature of the body associated. A message body is the one which carries the actual HTTP request data (including form, image data etc), and HTTP response data from the server (including files, images etc).</p>
+
+<p>An example of a message body. It is a file of “Content-type: text/html”:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;html&gt;
+    &lt;body&gt;
+        &lt;h1&gt; Hello!&lt;/h1&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<h2 id="http-security">HTTP Security</h2>
+<p>An HTTP usually experence the following security threats:</p>
+<ul>
+  <li>proxies and caching: proxies have access to security-related information such as personal information, so proxy operators should protect the systems on which proxies run. Second, cache contents should be protected as sensitive information may be included.</li>
+  <li>Authentication: exisiting HTTP clients typically retain authentication information indefinitely. For example, HTTP/1.1 doesn’t provide a method for server to direct clients to discard these cached credentials.</li>
+  <li>check location headers and spoofings: if a single server supports multiple organizations that don’t trust each other, then it must check the values of location and content location header in the response.</li>
+</ul>
+
+<p>General suggestions: 
+Since HTTP clients are often privy to large amount of personal information.</p>
+<ol>
+  <li>all credential information must be sorted at the server in encrypted form.
+    <ul>
+      <li>revealing the specific software version of the server will allow the server machine to become more vulunerable to attacks against software that is known to certain security holes.</li>
+      <li>proxies that serves as a portal through a network firewall shall take special precautions regarding the transfer of header information that identifies the hosts behind the firewall.</li>
+    </ul>
+  </li>
+</ol>
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">Latest Articles</span>
+       <h2 class="post-list__post-title post-title"><a href="/2020/10/Bash/" title="link to Bash">Bash</a></h2>
+       <p class="excerpt">PATHWhat is PATHWhen you wish to install programs into other locations on your host, but be able to execute them easily without specifying their exact location. This can be easily done by adding a ...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2020-10-21 11:18:12 -0700" class="post-list__meta--date date">2020-10-21</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2020/10/Bash/>Read More</a></div>
+   </div>
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">Eariler Articles</span>
+       <h2 class="post-list__post-title post-title"><a href="/2020/10/DTO/" title="link to DTO">DTO</a></h2>
+       <p class="excerpt">DTO stands for “Data Transfer Objects”. It is a design pattern for a representation of data, it can be formatted as JSON, XML, etc. It differs from JSON as JSON is a type of serialization and DTO i...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2020-10-18 16:09:12 -0700" class="post-list__meta--date date">2020-10-18</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2020/10/DTO/>Read More</a></div>
+   </div>
+   
+</section>
+
+
+            <section class="footer">
+    <footer></footer>
+    
+        <span class="footer__copyright"> &copy; 2020 Casie Bao</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

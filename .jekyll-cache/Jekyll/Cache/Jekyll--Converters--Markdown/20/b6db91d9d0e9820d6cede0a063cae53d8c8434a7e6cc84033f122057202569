@@ -1,0 +1,2 @@
+I"�<p>DTO stands for “Data Transfer Objects”. It is a design pattern for a representation of data, it can be formatted as JSON, XML, etc. <strong>It differs from JSON as JSON is a type of serialization and DTO is a serialized object.</strong></p>
+:ET
