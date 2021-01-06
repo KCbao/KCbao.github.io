@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>pytest</title>
+  <meta name="description" content="Pytest can be used in many cases in the project for unit testings. For example, in MAFEA, we use it to verify our schema written in pydantic classes. In MongoDB M220 class, we use the pytest to ver...">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="pytest">
+  <meta name="twitter:description" content="Pytest can be used in many cases in the project for unit testings. For example, in MAFEA, we use it to verify our schema written in pydantic classes. In MongoDB M220 class, we use the pytest to ver...">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="pytest">
+  <meta property="og:description" content="Pytest can be used in many cases in the project for unit testings. For example, in MAFEA, we use it to verify our schema written in pydantic classes. In MongoDB M220 class, we use the pytest to ver...">
+  
+  <!-- <link rel="icon" type="image/png" href="/assets/images/favicon.png" /> -->
+  <!-- <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png"> -->
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2020/05/pytest/">
+  <link rel="alternate" type="application/rss+xml" title="Casie Bao" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="http://localhost:4000/#blog" title="前往 Casie Bao 的主页" class="blog-button"></a>
+        <h1 class="panel-cover__title panel-title"><a href="http://localhost:4000/#blog" title="link to homepage for Casie Bao" class="blog-button">Casie Bao</a></h1>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">All the lights we cannot see</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="Visit blog" class="blog-button">Blog</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/KCbao" title="@KCbao 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+
+  
+  <!-- LinkedIn -->
+  <li class="navigation__item">
+    <a href="https://www.linkedin.com/in/anyi-casie-bao-78186aa7" title="@anyi-casie-bao-78186aa7" target="_blank">
+      <i class='social fa fa-linkedin'></i>
+      <span class="label">LinkedIn</span>
+    </a>
+  </li>
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-disabled"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2020-05-03 11:18:12 -0700" itemprop="datePublished" class="post-meta__date date">2020-05-03</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">pytest</h1>
+  </header>
+
+  <section class="post">
+    <p>Pytest can be used in many cases in the project for unit testings. For example, in MAFEA, we use it to verify our schema written in pydantic classes. In MongoDB M220 class, we use the pytest to verify our functin results.</p>
+
+<p>The example below shows a unit test using pytest:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import pytest
+from mflix.db import get_movies_by_country
+
+@pytest.mark.projection
+def test_basic_country_search_db(client):
+    countries = ['Kosovo']
+    result = get_movies_by_country(countries)
+    assert len(result) == 2
+</code></pre></div></div>
+
+<h3 id="marking-test-functions-and-selecting-them-for-a-run">Marking test functions and selecting them for a run</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import pytest
+
+@pytest.mark.webtest
+def test_send_http():
+    pass  # perform some webtest test for your app
+
+def test_something_quick():
+    pass
+
+
+def test_another():
+    pass
+</code></pre></div></div>
+<ul>
+  <li>when test, you could only run tests marked with <code class="language-plaintext highlighter-rouge">webtest</code> by <code class="language-plaintext highlighter-rouge">pytest -v -m webtest</code></li>
+  <li>Or the inverse, running all tests except the webtests by <code class="language-plaintext highlighter-rouge">pytest -v -m "not webtest"</code>.</li>
+</ul>
+
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">Latest Articles</span>
+       <h2 class="post-list__post-title post-title"><a href="/2020/10/welcome-to-jekyll/" title="link to Welcome to Jekyll!">Welcome to Jekyll!</a></h2>
+       <p class="excerpt">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run je...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2020-10-18 00:49:12 -0700" class="post-list__meta--date date">2020-10-18</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2020/10/welcome-to-jekyll/>Read More</a></div>
+   </div>
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">Eariler Articles</span>
+       <h2 class="post-list__post-title post-title"><a href="/2020/05/mongodb/" title="link to MongoDB">MongoDB</a></h2>
+       <p class="excerpt">MongoDB  NoSQL  mongodb+srv://&lt;username&gt;:&lt;pwd&gt;@&lt;host&gt;/&lt;database&gt;. The hostname does not necessarily imply any cluster configuration.Use MongoDBUsing MongoDB Atlas  Create a ...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2020-05-02 11:18:12 -0700" class="post-list__meta--date date">2020-05-02</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2020/05/mongodb/>Read More</a></div>
+   </div>
+   
+</section>
+
+
+            <section class="footer">
+    <footer></footer>
+    
+        <span class="footer__copyright"> &copy; 2020 Casie Bao</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

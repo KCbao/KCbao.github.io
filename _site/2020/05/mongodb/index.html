@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>MongoDB</title>
+  <meta name="description" content="MongoDB  NoSQL  mongodb+srv://&lt;username&gt;:&lt;pwd&gt;@&lt;host&gt;/&lt;database&gt;. The hostname does not necessarily imply any cluster configuration.">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="MongoDB">
+  <meta name="twitter:description" content="MongoDB  NoSQL  mongodb+srv://&lt;username&gt;:&lt;pwd&gt;@&lt;host&gt;/&lt;database&gt;. The hostname does not necessarily imply any cluster configuration.">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="MongoDB">
+  <meta property="og:description" content="MongoDB  NoSQL  mongodb+srv://&lt;username&gt;:&lt;pwd&gt;@&lt;host&gt;/&lt;database&gt;. The hostname does not necessarily imply any cluster configuration.">
+  
+  <!-- <link rel="icon" type="image/png" href="/assets/images/favicon.png" /> -->
+  <!-- <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png"> -->
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2020/05/mongodb/">
+  <link rel="alternate" type="application/rss+xml" title="Casie Bao" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="http://localhost:4000/#blog" title="前往 Casie Bao 的主页" class="blog-button"></a>
+        <h1 class="panel-cover__title panel-title"><a href="http://localhost:4000/#blog" title="link to homepage for Casie Bao" class="blog-button">Casie Bao</a></h1>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">All the lights we cannot see</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="Visit blog" class="blog-button">Blog</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/KCbao" title="@KCbao 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+
+  
+  <!-- LinkedIn -->
+  <li class="navigation__item">
+    <a href="https://www.linkedin.com/in/anyi-casie-bao-78186aa7" title="@anyi-casie-bao-78186aa7" target="_blank">
+      <i class='social fa fa-linkedin'></i>
+      <span class="label">LinkedIn</span>
+    </a>
+  </li>
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-disabled"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2020-05-02 11:18:12 -0700" itemprop="datePublished" class="post-meta__date date">2020-05-02</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">MongoDB</h1>
+  </header>
+
+  <section class="post">
+    <h2 id="mongodb">MongoDB</h2>
+<ul>
+  <li>NoSQL</li>
+  <li><code class="language-plaintext highlighter-rouge">mongodb+srv://&lt;username&gt;:&lt;pwd&gt;@&lt;host&gt;/&lt;database&gt;</code>. The hostname does not necessarily imply any cluster configuration.</li>
+</ul>
+
+<h2 id="use-mongodb">Use MongoDB</h2>
+<p><strong>Using MongoDB Atlas</strong></p>
+<ol>
+  <li>Create a cluster</li>
+  <li>Load sample dataset</li>
+  <li>setup your IP and credentials and obtain the connection URI</li>
+</ol>
+
+<p><strong>Install mongodb on Windows</strong></p>
+<ol>
+  <li>create the data folders to store your databases</li>
+  <li>setup alias shorts for mongo and mongod.
+    <ul>
+      <li>open GitBash</li>
+      <li>Change dir to your home dir by <code class="language-plaintext highlighter-rouge">cd ~</code></li>
+      <li>create bash_profile <code class="language-plaintext highlighter-rouge">touch .bach_profile</code></li>
+      <li>put in the following in .bash_profile</li>
+      <li>
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> alias mongod="C:/Program\ Files/MongoDB/Server/4.2/bin/mongod.exe"
+ alias mongo="C:/Program\ Files/MongoDB/Server/4.2/bin/mongo.exe"
+</code></pre></div>        </div>
+      </li>
+      <li>verify the setup by
+        <ul>
+          <li>close down current terminal</li>
+          <li>re-launch git bash</li>
+          <li>type <code class="language-plaintext highlighter-rouge">mongo --version</code>, you shall see mongoDB shell version, build env, etc</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="bson">BSON</h2>
+<p><code class="language-plaintext highlighter-rouge">pip install bson</code>: for BSON (binary JSON) encoding and decoding</p>
+
+<h2 id="python-client">Python Client</h2>
+<h3 id="pymongo">Pymongo</h3>
+<p><strong>Installation</strong>
+Note: need to install bson first, then install pymongo to avoid some errors</p>
+
+<p><strong>Read</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>client = pymongo.MongoClient(uri)
+mflix = client.sample_mflix
+
+# movies is our collection handle - it refers to the sample_mflix.movies collection
+movies = mflix.movies
+# find all movies with Salma Hayek
+# then pretty print
+cursor = movies.find( { "cast": "Salma Hayek" } )
+from bson.json_util import dumps
+print(dumps(cursor, indent=2))
+</code></pre></div></div>
+<ul>
+  <li>reading with <code class="language-plaintext highlighter-rouge">find_one()</code>: returns a record directly; reading with <code class="language-plaintext highlighter-rouge">find()</code>: return an iterable, need to iterating through cursors to read records.</li>
+  <li>use cursor to save results as Python iterables. Note that the cursor object expires after being called once.</li>
+  <li>we here use bson.json_util to dump cursor object and get it printed nicely</li>
+  <li>you could also use <code class="language-plaintext highlighter-rouge">list(cursor)</code> to return a list of records contained in the cursor.</li>
+  <li>using “cast.actor” to project sub-field of “cast” field</li>
+</ul>
+
+<p><strong>Cursor Methods and Aggregation equalvalents</strong>
+Aggregation: It is a MongoDB operation. Basically it is composed of a pipeline of operations (a list of stages of query operation dict) to query records from db. Pymongo also has aggregate methods by <code class="language-plaintext highlighter-rouge">&lt;collection&gt;.aggregate(&lt;pipeline list&gt;)</code>.</p>
+
+<p>Cursor methods are methods available in pymongo. The following cursor methods have MongoDB equals:</p>
+<ul>
+  <li>limit(n): number of outputs</li>
+  <li>sort([(“field name”, “sorting order”), (…)])</li>
+  <li>skip(n): skip the first n items.</li>
+</ul>
+
+<p><strong>Writes</strong></p>
+<ul>
+  <li>insert_one: the return object contains “_id” of the inserted object, checked by <code class="language-plaintext highlighter-rouge">inserted_result.inserted_id</code>, and it tells whether the operation is acknowedged by the server, checked by <code class="language-plaintext highlighter-rouge">inserted_result.acknowledged</code> which returns a Boolean value.</li>
+  <li>upsert: Sometimes, we want to update a document, but we’re not sure if it exists in the collection. We can use an “upsert” to update a document if it exists, and insert it if it does not exist.
+This operation may do one of two things:
+    <ul>
+      <li>If the predicate matches a document, update the document to contain the correct data.</li>
+      <li>If the document doesn’t exist, create the desired document.
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  upsert_result = vg.update_one( { "title": "Fortnite" } , { "$set": fortnite_doc }, upsert=True )
+  upsert_result.raw_result
+</code></pre></div>        </div>
+      </li>
+      <li>this result object should have ‘updatedExisting’: True, because this operation updated an existing document. If it is insertion of a new record, ‘updatedExisiting’: False.</li>
+      <li>besides, “.raw_result” include information such as number of updates, operationTime, ObjectId, clusterTime etc.</li>
+      <li>“update_one({query}, {update operation}, upsert=True)”. In this example, the query predicate here is { “title”: “Fortnite” }.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Write concerns</strong>
+{w: n}: where n is the number of nodes get committed before the client receives acknowledgement.</p>
+<ul>
+  <li>{w: 1}: default writeConcern, it makes sure writes have been commited by at least 1 node.</li>
+  <li>{w: ‘marjority’}: requests acknowledgement made from server to client if the majority of nodes in the replica set applied the write from the primary db. It takes longer than {w:1}, and it is more durable because it ensures vital writes are majority-committed.</li>
+  <li>{w: 0}: don’t request an acknowledgement that any nodes applied the write (i.e., client could get acknowledgement before data is actually written to any db - primary or secondary dbs). It is fastest writeConcern level, and least durable.</li>
+</ul>
+
+<p>Set write concern</p>
+<ul>
+  <li>for client-wise: <code class="language-plaintext highlighter-rouge">client = MongoClient(w="majority"), then check client.write_concern -&gt; WriteConcern(w=majority)</code></li>
+  <li>for db: <code class="language-plaintext highlighter-rouge">from pymongo import WriteConcern, db = client.get_database("my_database",write_concern=WriteConcern(w="majority"))</code></li>
+  <li>for collection <code class="language-plaintext highlighter-rouge">from pymongo import WriteConcern coll2 = collection.with_options(write_concern=WriteConcern(w="majority"))
+oid = coll2.insert({"a": 2})</code>
+    <h2 id="motor">Motor</h2>
+    <p><code class="language-plaintext highlighter-rouge">pip install motor</code>: asyc python driver for mongoDB
+<code class="language-plaintext highlighter-rouge">client = motor.motor_asyncio.AsyncIOMotorClient(Databse_URL)</code>: create a new connection to a single MongoDB instance at host:port (database_url)</p>
+  </li>
+</ul>
+
+<h3 id="get-database">Get database</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">client.&lt;database name&gt;</code> or <code class="language-plaintext highlighter-rouge">client['database_name']</code>: a single instance of MongoDB can support multiple independent databases.</li>
+</ul>
+
+<h2 id="mongodb-terminology">MongoDB terminology</h2>
+<ul>
+  <li>database: a collection of multiple tables</li>
+  <li>a collection: one table</li>
+  <li>document: one row in the table</li>
+  <li>field: column</li>
+  <li>table joins: MongoDB doesn’t support</li>
+  <li>“_id”: MongoDB will use “_id” as primary key (unique index) to the document</li>
+</ul>
+
+<h2 id="mongod">Mongod</h2>
+<p>Mongod is the mongodb daemon process, mainly used to start mongodb service. We could use one window to type in <code class="language-plaintext highlighter-rouge">mongod</code> to start mongoDB, and in another window, through <code class="language-plaintext highlighter-rouge">mongo</code> to link to database.</p>
+
+<h2 id="the-mongo-shell">The mongo Shell</h2>
+<ol>
+  <li>to connect to MongoDB instance running on your localhost default 27017 by typing <code class="language-plaintext highlighter-rouge">mongo</code>, connect to a non-default port <code class="language-plaintext highlighter-rouge">mongo --port 28015</code>, this will lead to a JS interative window, where you can type more commands in, need to end command with “;” because of JS. 
+In that interative window:
+    <h2 id="shundown-running-instance-and-restart">Shundown running instance and restart</h2>
+    <p>`db.adminCommand({shutdown: 1})</p>
+  </li>
+</ol>
+
+<h3 id="listing-databases">listing databases</h3>
+<p><code class="language-plaintext highlighter-rouge">show databases</code></p>
+<h3 id="go-to-a-particular-databse">go to a particular databse</h3>
+<p><code class="language-plaintext highlighter-rouge">use &lt;your_db_name&gt;</code>, if this <your_db_name> is not present, then MongoDB server will create the database for you</your_db_name></p>
+<h3 id="insert-data">insert data</h3>
+<p>After switch to <you_db_name>,</you_db_name></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">db.myCollection.insert({})</code>: insert documents as many as you want</li>
+  <li><code class="language-plaintext highlighter-rouge">db.myCollection.insertOne({})</code>: insert single document</li>
+  <li><code class="language-plaintext highlighter-rouge">db.myCollection.insertMany({})</code>: similar to <code class="language-plaintext highlighter-rouge">insert</code>, it can insert more than one document</li>
+</ul>
+
+<h3 id="query-data">Query data</h3>
+<p><code class="language-plaintext highlighter-rouge">db.myCollection.find({age: {$lt: 25}})</code>, or <code class="language-plaintext highlighter-rouge">db.myCollection.find().pretty()</code>: will display document in pretty-printed JSON format</p>
+
+<p><code class="language-plaintext highlighter-rouge">$lt</code>: special token, stand for less than</p>
+
+<h3 id="remove-a-document">Remove a document</h3>
+<p><code class="language-plaintext highlighter-rouge">db.myCollection.remove({name: "john"})</code>: delete a collection</p>
+
+<h3 id="exit-the-shell">Exit the shell</h3>
+<p><code class="language-plaintext highlighter-rouge">quit()</code>, or Ctrl-C</p>
+
+<h2 id="replication">Replication</h2>
+<p>Main objective: replicate data and sync data across multiple server, improve the usability and security. 
+Why replicate: - disaster recovery, allow you to recover data from hardware trouble or server break down.</p>
+
+<h3 id="replication-main-theory">Replication Main theory</h3>
+<p>Replication needs at least two nodes, one and only one must be “primary node”, rest are secondary nodes. Common are one primary-one secondary, or one primary-multiple secondary.</p>
+
+<ul>
+  <li>primary node: receives all read and write operations from client app, it then records all changes to its datasets in its operation log (oplog)</li>
+  <li>secondary node: secondaries replicate the primary’s oplog and apply the operations to their datasets in an asyc process.</li>
+</ul>
+
+<p>All replicata set members contain a copy of oplog in “local.oplog.rs”, allowing them to maintain the current state of the database.</p>
+
+<h2 id="objectid">ObjectId</h2>
+<ol>
+  <li>default id for Mongodb.</li>
+  <li>it is mostly monotonically increasing. Because it contains 4-bits of timestamp. Timestamp is in seconds, not milliseconds, so within the same second, the order of value is not guaranteed.</li>
+  <li>Using ObjectId is efficient for indexing (means querying documents) and sorting.</li>
+</ol>
+
+<h3 id="connection-pooling">Connection Pooling</h3>
+<ul>
+  <li>it allows for reuse of connections</li>
+  <li>main benefits:
+    <ul>
+      <li>New operations can be serviced with pre-existing connections and subsequent requests appear faster to the client. The overhead of creating a TCP connection often results in waiting time, but this is avoided by reusing a connection.</li>
+      <li>A large influx of operations can be handled more quickly with a pool of existing connections. Because the application has created a lot of available connections before they are needed, it has the bandwidth to service as many requests as connections.</li>
+    </ul>
+  </li>
+  <li>by default, the connection pools are 100 connections.</li>
+  <li>connection pools are specific to a client, and the number of connections is declared when the client is initialized.</li>
+  <li>all connections in the pool are dropped after the client is terminated.</li>
+</ul>
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">Latest Articles</span>
+       <h2 class="post-list__post-title post-title"><a href="/2020/05/pytest/" title="link to pytest">pytest</a></h2>
+       <p class="excerpt">Pytest can be used in many cases in the project for unit testings. For example, in MAFEA, we use it to verify our schema written in pydantic classes. In MongoDB M220 class, we use the pytest to ver...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2020-05-03 11:18:12 -0700" class="post-list__meta--date date">2020-05-03</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2020/05/pytest/>Read More</a></div>
+   </div>
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">Eariler Articles</span>
+       <h2 class="post-list__post-title post-title"><a href="/2020/05/Kafka/" title="link to Kafka introduction">Kafka introduction</a></h2>
+       <p class="excerpt">Kafka  good at dealing with large amount of data split into small chunks  Topics: to link consumer and producer  Kafka has its own BD, so if anything is missed during transmission, we can rollback ...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2020-05-01 11:18:12 -0700" class="post-list__meta--date date">2020-05-01</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2020/05/Kafka/>Read More</a></div>
+   </div>
+   
+</section>
+
+
+            <section class="footer">
+    <footer></footer>
+    
+        <span class="footer__copyright"> &copy; 2020 Casie Bao</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>
