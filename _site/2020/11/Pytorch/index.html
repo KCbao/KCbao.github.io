@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+  
   <title>All about Pytorch</title>
   <meta name="description" content="Tensor">
   <meta name="author" content="Wei Wang">
@@ -44,7 +44,6 @@
 
     <div class="panel-main__inner panel-inverted">
     <div class="panel-main__content">
-
         <a href="http://localhost:4000/#blog" title="前往 Casie Bao 的主页" class="blog-button"></a>
         <h1 class="panel-cover__title panel-title"><a href="http://localhost:4000/#blog" title="link to homepage for Casie Bao" class="blog-button">Casie Bao</a></h1>
         
@@ -140,8 +139,15 @@
 <code class="language-plaintext highlighter-rouge">RuntimeError: Expected object of scalar type Float but got scalar type Double for xxxxx</code>. 
 Solve by <code class="language-plaintext highlighter-rouge">y_pred = model(X_test_tensor.float())</code>.</p>
 
-<h2 id="watch-gpu-usage">Watch GPU usage</h2>
-<p><code class="language-plaintext highlighter-rouge">watch -n 0.5 nvidia-smi</code></p>
+<p><strong>Debug CUDA</strong></p>
+<ul>
+  <li>In command line, use <code class="language-plaintext highlighter-rouge">CUDA_LAUNCH_BLOCKING=1 python &lt;script&gt;.py</code></li>
+</ul>
+
+<p><strong>Watch GPU usage</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">watch -n 0.5 nvidia-smi</code></li>
+</ul>
 
 <h2 id="multi-gpu-results-is-a-list">Multi-gpu, results is a list</h2>
 
@@ -178,7 +184,7 @@ etc</p>
             <section class="footer">
     <footer></footer>
     
-        <span class="footer__copyright"> &copy; 2020 Casie Bao</span>
+        <span class="footer__copyright"> &copy; 2021 Casie Bao</span>
     </footer>
 </section>
 

@@ -5,18 +5,18 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+  
   <title>Python tricks</title>
-  <meta name="description" content="List files and folders in the current directoryimport osarr = os.listdir("&lt;dir to work on&gt;")print(arr) =&gt; ['3ebooks.txt', 'documents']">
+  <meta name="description" content="Folder Structure Best PracticeREADME.rstLICENSEsetup.pyrequirements.txtsample/    __init__.py    core.py    helpers.pydocs/    conf.py    index.rsttests/    test_basic.py    test_advanced.pynoteboo...">
   <meta name="author" content="Wei Wang">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Python tricks">
-  <meta name="twitter:description" content="List files and folders in the current directoryimport osarr = os.listdir("&lt;dir to work on&gt;")print(arr) =&gt; ['3ebooks.txt', 'documents']">
+  <meta name="twitter:description" content="Folder Structure Best PracticeREADME.rstLICENSEsetup.pyrequirements.txtsample/    __init__.py    core.py    helpers.pydocs/    conf.py    index.rsttests/    test_basic.py    test_advanced.pynoteboo...">
   
   <meta property="og:type" content="article">
   <meta property="og:title" content="Python tricks">
-  <meta property="og:description" content="List files and folders in the current directoryimport osarr = os.listdir("&lt;dir to work on&gt;")print(arr) =&gt; ['3ebooks.txt', 'documents']">
+  <meta property="og:description" content="Folder Structure Best PracticeREADME.rstLICENSEsetup.pyrequirements.txtsample/    __init__.py    core.py    helpers.pydocs/    conf.py    index.rsttests/    test_basic.py    test_advanced.pynoteboo...">
   
   <!-- <link rel="icon" type="image/png" href="/assets/images/favicon.png" /> -->
   <!-- <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png"> -->
@@ -44,7 +44,6 @@
 
     <div class="panel-main__inner panel-inverted">
     <div class="panel-main__content">
-
         <a href="http://localhost:4000/#blog" title="前往 Casie Bao 的主页" class="blog-button"></a>
         <h1 class="panel-cover__title panel-title"><a href="http://localhost:4000/#blog" title="link to homepage for Casie Bao" class="blog-button">Casie Bao</a></h1>
         
@@ -128,7 +127,28 @@
   </header>
 
   <section class="post">
-    <h2 id="list-files-and-folders-in-the-current-directory">List files and folders in the current directory</h2>
+    <h2 id="folder-structure-best-practice">Folder Structure Best Practice</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>README.rst
+LICENSE
+setup.py
+requirements.txt
+sample/
+    __init__.py
+    core.py
+    helpers.py
+docs/
+    conf.py
+    index.rst
+tests/
+    test_basic.py
+    test_advanced.py
+notebooks/
+</code></pre></div></div>
+<ul>
+  <li>reStructuredText(.rst) is a file format for textual data used primarily in the Python programming language community for technical documentation.</li>
+</ul>
+
+<h2 id="list-files-and-folders-in-the-current-directory">List files and folders in the current directory</h2>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import os
 arr = os.listdir("&lt;dir to work on&gt;")
 print(arr) =&gt; ['3ebooks.txt', 'documents']
@@ -142,6 +162,39 @@ print(arr) =&gt; ['3ebooks.txt', 'documents']
   <li>keyword-only parameter (e.g., <code class="language-plaintext highlighter-rouge">*args</code>)</li>
   <li>var-keyword parameter (e.g., <code class="language-plaintext highlighter-rouge">**kwargs</code>)</li>
 </ol>
+
+<h2 id="static-method">Static method</h2>
+<ul>
+  <li>Static methods are methods that are bound to a class rather than its object. They do not require a class instance creation.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Dates:
+    def __init__(self, date):
+        self.date = date
+        
+    def getDate(self):
+        return self.date
+
+    @staticmethod
+    def toDashDate(date):
+        return date.replace("/", "-")
+
+date = Dates("15-12-2016")
+dateFromDB = "15/12/2016"
+dateWithDash = Dates.toDashDate(dateFromDB)
+
+if(date.getDate() == dateWithDash):
+    print("Equal")
+else:
+    print("Unequal")
+
+# output "Equal"
+</code></pre></div></div>
+<ul>
+  <li>note in the above example, users don’t need to create an object of the class Date, it can use its static method by directly calling <code class="language-plaintext highlighter-rouge">&lt;classname&gt;.&lt;static method name&gt;</code>.</li>
+  <li>It is a static method because it doesn’t need to access any properties of Dates itself (e.g., “self”) and only requires the parameters.</li>
+  <li>We can also create toDashDate outside the class, but since it works only for dates, it’s logical to keep it inside the Dates class.</li>
+</ul>
 
   </section>
 </article>
@@ -172,7 +225,7 @@ print(arr) =&gt; ['3ebooks.txt', 'documents']
             <section class="footer">
     <footer></footer>
     
-        <span class="footer__copyright"> &copy; 2020 Casie Bao</span>
+        <span class="footer__copyright"> &copy; 2021 Casie Bao</span>
     </footer>
 </section>
 

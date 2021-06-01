@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <title>2021 Readings</title>
+  <meta name="description" content="A Joint Traning Dual-MRC Framework for Aspect Based Sentiment Analysis  Alibaba Group, Jan 4, 2021, AAAI 2021  Main problem focused: solve Aspect based sentiment analysis (ABSA) i.e., extract the t...">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="2021 Readings">
+  <meta name="twitter:description" content="A Joint Traning Dual-MRC Framework for Aspect Based Sentiment Analysis  Alibaba Group, Jan 4, 2021, AAAI 2021  Main problem focused: solve Aspect based sentiment analysis (ABSA) i.e., extract the t...">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="2021 Readings">
+  <meta property="og:description" content="A Joint Traning Dual-MRC Framework for Aspect Based Sentiment Analysis  Alibaba Group, Jan 4, 2021, AAAI 2021  Main problem focused: solve Aspect based sentiment analysis (ABSA) i.e., extract the t...">
+  
+  <!-- <link rel="icon" type="image/png" href="/assets/images/favicon.png" /> -->
+  <!-- <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png"> -->
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2021/01/NLP/">
+  <link rel="alternate" type="application/rss+xml" title="Casie Bao" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+        <a href="http://localhost:4000/#blog" title="前往 Casie Bao 的主页" class="blog-button"></a>
+        <h1 class="panel-cover__title panel-title"><a href="http://localhost:4000/#blog" title="link to homepage for Casie Bao" class="blog-button">Casie Bao</a></h1>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">All the lights we cannot see</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="Visit blog" class="blog-button">Blog</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/KCbao" title="@KCbao 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+
+  
+  <!-- LinkedIn -->
+  <li class="navigation__item">
+    <a href="https://www.linkedin.com/in/anyi-casie-bao-78186aa7" title="@anyi-casie-bao-78186aa7" target="_blank">
+      <i class='social fa fa-linkedin'></i>
+      <span class="label">LinkedIn</span>
+    </a>
+  </li>
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-disabled"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2021-01-05 10:18:12 -0800" itemprop="datePublished" class="post-meta__date date">2021-01-05</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">2021 Readings</h1>
+  </header>
+
+  <section class="post">
+    <p><strong>A Joint Traning Dual-MRC Framework for Aspect Based Sentiment Analysis</strong></p>
+<ul>
+  <li>Alibaba Group, Jan 4, 2021, AAAI 2021</li>
+  <li>Main problem focused: solve Aspect based sentiment analysis (ABSA) i.e., extract the triplet(aspect term, opinion term, sentiment polarity) from a sentence. e.g., The ambience was nice, but the service was not so great. =&gt; (ambience, nice, positive), (service, not so great, negative).</li>
+  <li>Main contribution: Joint train two BERT-MRC models (one model to extract all aspect terms (AT) from the given task, and the ohther model is to extract all opinion terms (OT) and find sentiment polarity (SP) w.r.t a given specific aspect erm, both models use BERT as backbone) with parameters sharing.</li>
+  <li>Evaluation:
+    <ul>
+      <li>metrics: precision, recall, F1</li>
+      <li>datasets: <a href="https://github.com/xuuuluuu/SemEval-Triplet-data">Aspect Sentiment Triplet Extraction (AT, OT, SP), ACL</a>, <a href="https://github.com/NJUNLP/TOWE">(AT, OT), data row is labelled by given a query, B “beginning of OT”, I: Content of OT, O: irrelevant to query</a>, Semeval tasks</li>
+    </ul>
+  </li>
+  <li>How relate to MAFEA? without ABSA, to deal with such sentence, we might need to split it into sub-sentence, and run sentiment analysis on each part. With ABSA, we could obtain better Machine Reading Comprehension (MRC).</li>
+  <li>TODO: try this model when it is open-sourced.</li>
+</ul>
+
+<p><strong>A Multi-task Learning Framework for Opinion Triplet Extraction (open-sourced)</strong></p>
+<ul>
+  <li>EMNLP 2020, Oct 31, 2020</li>
+  <li>How relate to MAFEA? I tried the model, trying to use it to  do aspect sentiment analysis to filtered results. However, there are a few problems:
+    <ul>
+      <li>this model is trained on English corpus (I trained on ec2 p2, about 30-40 mins on a 1300 sent dataset REST14)</li>
+      <li>according to their paper Table 2, OTE-MTL trained on REST14 gets the hightest f1 score on test dataset, and the highest score if 60.62%. Meaning that even for in-domain test, it is still not suffient to extract aspects and determine its sentiment polarity. It would be even more challenge to be used on a out-of-domain inference data. Compared to Dual-MRC, Dual-MRC outperforms OTE-MTL by a large margin. For the same dataset REST14, Dual-MRC obtains 83.73% f1 score.</li>
+      <li>Is it possible to retrain on our S-BERT model.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>VoxPopuli: A large-scale multilingual speech corpus for representation learning, semi-supervised learning and interpretation</strong></p>
+<ul>
+  <li>Facebook AI, Jan 2, 2021</li>
+  <li>Main contribution: release a large-scale multilingual corpus providing 100K hours of unlabelled speech data in 23 languages. It also has 1.8K hours of transcribed speeches in 16 European languages and their aligned oral interpretations in 5 other languages. Useful for multilingual ASR</li>
+  <li>Interesting findings:
+    <ul>
+      <li>Pretraining with in-domain unlabelled data substantially improves performance especially for low-resource languages.</li>
+      <li>Model pretrained on VoxPopuli outperforms with out-of-domain and (partially) out-of-language (languages not in VoxPopuli Langs).</li>
+      <li>self-training on VoxPopuli improves both in-domain and out-of-domain performance.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>self-training</strong></p>
+<ul>
+  <li>a classical semi-supervised approach, where unlabelled data is equipped with pseudo-labels from a supervised model and then combined with labelled data for model training.</li>
+  <li>often need to decide/fine-tuning the sampling ratio of labelled and pseudo-labelled data.</li>
+</ul>
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">Latest Articles</span>
+       <h2 class="post-list__post-title post-title"><a href="/2021/01/Java/" title="link to Java">Java</a></h2>
+       <p class="excerpt">JDK vs JRE vs JVM      JDK – Java Development Kit (in short JDK) is Kit which provides the environment to develop and execute(run) the Java program. JDK is a kit(or package) which includes two thin...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2021-01-19 10:18:12 -0800" class="post-list__meta--date date">2021-01-19</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2021/01/Java/>Read More</a></div>
+   </div>
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">Eariler Articles</span>
+       <h2 class="post-list__post-title post-title"><a href="/2020/12/ResponsiveDesign/" title="link to Responsive Design">Responsive Design</a></h2>
+       <p class="excerpt">Main idea: write codes in the dymanic design so that it is resizable and suitable for different devices.Best Practice:  Relative Units: auto-resize app depending on which devices sitting on, %, em,...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2020-12-10 10:18:12 -0800" class="post-list__meta--date date">2020-12-10</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2020/12/ResponsiveDesign/>Read More</a></div>
+   </div>
+   
+</section>
+
+
+            <section class="footer">
+    <footer></footer>
+    
+        <span class="footer__copyright"> &copy; 2021 Casie Bao</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

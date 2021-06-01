@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+  
   <title>MongoDB</title>
   <meta name="description" content="MongoDB  NoSQL  mongodb+srv://&lt;username&gt;:&lt;pwd&gt;@&lt;host&gt;/&lt;database&gt;. The hostname does not necessarily imply any cluster configuration.">
   <meta name="author" content="Wei Wang">
@@ -44,7 +44,6 @@
 
     <div class="panel-main__inner panel-inverted">
     <div class="panel-main__content">
-
         <a href="http://localhost:4000/#blog" title="前往 Casie Bao 的主页" class="blog-button"></a>
         <h1 class="panel-cover__title panel-title"><a href="http://localhost:4000/#blog" title="link to homepage for Casie Bao" class="blog-button">Casie Bao</a></h1>
         
@@ -134,7 +133,13 @@
   <li><code class="language-plaintext highlighter-rouge">mongodb+srv://&lt;username&gt;:&lt;pwd&gt;@&lt;host&gt;/&lt;database&gt;</code>. The hostname does not necessarily imply any cluster configuration.</li>
 </ul>
 
-<h2 id="use-mongodb">Use MongoDB</h2>
+<h2 id="connect-to-atlas-and-access-db-from-mongo-shell">Connect to Atlas and access DB from Mongo Shell</h2>
+<p><strong>What is Atlas</strong></p>
+<ul>
+  <li>your db in the cloud</li>
+  <li>MongoDB is used at the core of Atlas for data storage and retrieval</li>
+</ul>
+
 <p><strong>Using MongoDB Atlas</strong></p>
 <ol>
   <li>Create a cluster</li>
@@ -142,18 +147,384 @@
   <li>setup your IP and credentials and obtain the connection URI</li>
 </ol>
 
-<p><strong>Install mongodb on Windows</strong></p>
-<ol>
-  <li>create the data folders to store your databases</li>
-  <li>setup alias shorts for mongo and mongod.
+<p><strong>Upload data to Atlas</strong></p>
+<ul>
+  <li>using mongoimport. Install mongoimport, download <a href="https://www.mongodb.com/try/download/database-tools">MongoDB Database Tools</a> to your local computer</li>
+  <li>Open terminal, type <code class="language-plaintext highlighter-rouge">&lt;local path to mongoimport&gt; --drop -c &lt;collection name&gt; --uri mongodb+srv://&lt;cluster username&gt;:&lt;cluster pwd&gt;@sandbox.sibrl.mongodb.net/&lt;db name&gt; &lt;local path to data file e.g., json file&gt;</code>:</li>
+</ul>
+
+<p><strong>Clusters</strong></p>
+<ul>
+  <li>users can create clusters on Atlas</li>
+  <li>clusters are a group of servers that stores your data</li>
+</ul>
+
+<p><strong>Replica set</strong></p>
+<ul>
+  <li>a few connected MongoDB instances that store the same data, where an instance is a single machine locally or in the cloud, running a certain software.</li>
+  <li>single cluster in Atlas is automatically configured as a replica set.</li>
+</ul>
+
+<p><strong>JSON vs BSON</strong></p>
+<ul>
+  <li>JSON is text-based format and text parsing is very slow and it is space-consuming, only support string, Boolean, Number and array， it is human and machine readable.</li>
+  <li>BSON is optimzed for speed and space, and supports more data types such as Date and raw binary, and it is machine readable.</li>
+  <li>mongoexport to export BSON objects stored in MongoDB to a JSON/csv file.</li>
+  <li>mongoimport to import JSON objects to MongoDB</li>
+  <li>mongodrop to drop db</li>
+  <li>mongodump exports data in its raw BSON form.</li>
+  <li>mongorestore imports data from a mongodump created BSON format.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mongodump --uri "mongodb+srv://&lt;your username&gt;:&lt;your password&gt;@&lt;your cluster&gt;.mongodb.net/sample_supplies"
+
+mongoexport --uri="mongodb+srv://&lt;your username&gt;:&lt;your password&gt;@&lt;your cluster&gt;.mongodb.net/sample_supplies" --collection=sales --out=sales.json
+
+mongorestore --uri "mongodb+srv://&lt;your username&gt;:&lt;your password&gt;@&lt;your cluster&gt;.mongodb.net/sample_supplies"  --drop dump
+
+mongoimport --uri="mongodb+srv://&lt;your username&gt;:&lt;your password&gt;@&lt;your cluster&gt;.mongodb.net/sample_supplies" --drop sales.json
+</code></pre></div></div>
+
+<p><strong>Create and Manipulating Documents</strong></p>
+<ul>
+  <li>
+    <ol>
+      <li>connect to cluster</li>
+    </ol>
+  </li>
+  <li>
+    <ol>
+      <li><code class="language-plaintext highlighter-rouge">use &lt;db name&gt;</code> e.g., <code class="language-plaintext highlighter-rouge">use sample_training</code></li>
+    </ol>
+  </li>
+  <li>
+    <ol>
+      <li><code class="language-plaintext highlighter-rouge">db.&lt;collection name&gt;.findOne()</code>: check an example exsiting in db, <code class="language-plaintext highlighter-rouge">db.&lt;collection name&gt;.find()</code>, <code class="language-plaintext highlighter-rouge">db.&lt;collection name&gt;.find().count()</code></li>
+    </ol>
+  </li>
+  <li>
+    <ol>
+      <li>Insertion: <code class="language-plaintext highlighter-rouge">db.&lt;collection name&gt;.insert(&lt;document&gt;)</code>： insert one doc, <code class="language-plaintext highlighter-rouge">db.&lt;coll name&gt;.insert([&lt;doc1&gt;, &lt;doc2&gt;,etc])</code>: insert multiple docs, <code class="language-plaintext highlighter-rouge">db.&lt;coll name&gt;.insert(, {"ordered": false})</code>: disable the default ordered insert. when “ordered=True”: insertion stops when encounter errors and will prevent the operation from reaching the other documents.</li>
+    </ol>
+  </li>
+  <li>
+    <ol>
+      <li><code class="language-plaintext highlighter-rouge">show collections</code>: view available collections in current db, <code class="language-plaintext highlighter-rouge">show dbs</code>: When all collections are dropped from a database, the database no longer appears in the list of databases when you run show dbs.</li>
+    </ol>
+  </li>
+  <li>Update and update operators: <code class="language-plaintext highlighter-rouge">db.&lt;collection name&gt;.updateOne({&lt;specify query}, {&lt;specify updates})</code>: update the first one matches the query, <code class="language-plaintext highlighter-rouge">db.&lt;collection name&gt;.update(&lt;document&gt;)</code>: update all docs matches the query
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">$inc: {"&lt;field&gt;": &lt;inc value&gt;, &lt;field 2&gt;: &lt;value2&gt;}</code></li>
+      <li><code class="language-plaintext highlighter-rouge">$set: {&lt;field 1&gt;: &lt;set field to this value&gt;, &lt;field 2&gt;: &lt;value2&gt;}</code>: if the field doesn’t exist, it will add this specified field</li>
+      <li><code class="language-plaintext highlighter-rouge">$push : {"&lt;array field&gt;: {&lt; field 1&gt;: &lt;set field to this value&gt;, &lt; field 2&gt;: &lt;value2&gt;}, "&lt;arr field 2&gt;: &lt;field1&gt;: &lt;value1&gt;}</code>: add an element to an array field</li>
+    </ul>
+  </li>
+  <li>Delete: <code class="language-plaintext highlighter-rouge">deleteOne()</code>, <code class="language-plaintext highlighter-rouge">deleteMany()</code>, <code class="language-plaintext highlighter-rouge">.drop()</code>: Drop the inspection collection.</li>
+</ul>
+
+<p><strong>Schema validation</strong></p>
+<ul>
+  <li>MongoDB has schema validation that allows users to enforce document structure.</li>
+</ul>
+
+<p><strong>Comparison Operators</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">{&lt;field&gt;: {$&lt;comparison operator&gt;: &lt;value&gt;}}</code></li>
+  <li>e.g., <code class="language-plaintext highlighter-rouge">db.trips.find({ "tripduration": { "$lte" : 70 },
+              "usertype": { "$ne": "Subscriber" } }).pretty()</code></li>
+</ul>
+
+<p><strong>Logical operators</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">$and, $or, $nor, : {$&lt;operator: [{statement 1}, {statement 2}]&gt;}</code></li>
+  <li><code class="language-plaintext highlighter-rouge">$not: {$not: {statement}}</code></li>
+  <li>Explicitly use $and when nedd to include the same operator more than once in a query</li>
+  <li>could use implicit $and for several queries one the same field. e.g., <code class="language-plaintext highlighter-rouge">{"pop": {"$le": 10, "$ge": 5}}</code></li>
+  <li>e.g.,
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Find all documents where airplanes CR2 or A81 left or landed in the KZN airport:
+db.routes.find({ "$and": [ { "$or" :[ { "dst_airport": "KZN" },
+                                  { "src_airport": "KZN" }
+                                ] },
+                        { "$or" :[ { "airplane": "CR2" },
+                                   { "airplane": "A81" } ] }
+                       ]}).pretty()
+</code></pre></div>    </div>
+  </li>
+  <li>$and is default expression, and can be used implicitly and explicitly. e.g., Using the sample_airbnb.listingsAndReviews collection find out how many documents have the “property_type” “House”, and include “Changing table” as one of the “amenities”?</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Implicit {clause 1, clause 2}
+db.listingsAndReviews.find({"property_type": "House", "amenities": {"$all": ["Changing table"]}}).count()
+
+# Explicit: $and: [{clause 1}, {clause 2}]
+db.listingsAndReviews.find({"$and": [{"property_type": "House"}, {"amenities": {"$all": ["Changing table"]}}]}).count()
+</code></pre></div></div>
+
+<p><strong>$expr</strong></p>
+<ul>
+  <li>allows for more complex queries and for comparing fields within a document
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># find all docs where the trip started and ended at the same station
+db.trips.find({ "$expr": { "$eq": [ "$end station id", "$start station id"] }
+            }).count()
+</code></pre></div>    </div>
+  </li>
+  <li>$: either an operator, or meaning $ for values for field, the second usage can only be used within “$expr” clauses.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>db.companies.find({ "number_of_employees": { "$gt":  "$founded_year" } }
+                  ).count()
+</code></pre></div></div>
+<ul>
+  <li>Incorrect example. This syntax is confusing for MQL, it is trying to look at every number of employees field and compare it to some specific numeric value, but that numeric value is not specified, it is pointing to the value of “founded_year” field but how do we know that we’re looking at the same document when we call the “number_of_employees” field? There is no way to tell, so this query will return a zero.</li>
+</ul>
+
+<p><strong>Array Operator</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">$push</code>: allow us to add an element to an array, and turns a field into an array field if it was previously a diff type</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Find all documents with exactly 20 amenities which include all the amenities listed in the query array
+db.listingsAndReviews.find({ "amenities": {
+                                  "$size": 20,
+                                  "$all": [ "Internet", "Wifi",  "Kitchen",
+                                           "Heating", "Family/kid friendly",
+                                           "Washer", "Dryer", "Essentials",
+                                           "Shampoo", "Hangers",
+                                           "Hair dryer", "Iron",
+                                           "Laptop friendly workspace" ]
+                                         }
+                            }).pretty()
+</code></pre></div></div>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">{&lt;array field&gt;: {$all: &lt;number&gt;} </code>: returns a cursor with all docs in which the specified array field contains all the given elements regardless of their order in the array.</li>
+  <li><code class="language-plaintext highlighter-rouge">{&lt;array field&gt;: {$size: &lt;number&gt;}</code>: returns a cursor with all docs where the specified array field is exactly the given length.</li>
+  <li><code class="language-plaintext highlighter-rouge">{&lt;array field&gt;: {"$elemMatch": {&lt;field in array item object&gt;: &lt;value&gt;}}}</code>: matches docs that contain an array field with at least one element that matches the specified query criteria. i.e., array elements are objects with multiple fields.</li>
+  <li><code class="language-plaintext highlighter-rouge">db.listingsAndReviews.find({ "amenities.0": "Internet" },{ "name": 1, "address": 1 })</code>: return the names and addresses of all listings from the sample_airbnb.listingsAndReviews collection where the first amenity in the list is “Internet”?</li>
+</ul>
+
+<p><strong>Projection</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">.find({query}, {projection})</code>: 1. include the field, 0: exclude the field</li>
+  <li>use only 1s or 0s otherwise will cause an error “Projection cannot have a mix of inclusion and exclusion”</li>
+</ul>
+
+<p><strong>MQL vs Aggregation syntax</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># MQL
+{&lt;field&gt;: {&lt;operator&gt;: &lt;value&gt;}}
+# Aggregation syntax: 
+{&lt;operator&gt;: {&lt;field&gt;, &lt;value&gt;}}
+</code></pre></div></div>
+
+<p><strong>Aggregation Framework</strong></p>
+<ul>
+  <li>aggregation does more than query operations (MQL), it can also be used to compute, re-shape and re-organize data.</li>
+  <li>$group:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># group by address.contry
+db.listingsAndReviews.aggregate([
+                                { "$project": { "address": 1, "_id": 0 }},
+                                { "$group": { "_id": "$address.country",
+                                              "count": { "$sum": 1 } } }
+                              ])
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>Cursor Methods</strong></p>
+<ul>
+  <li>
+    <p>sort(), limit(), pretty(), count(): it doesn’t deal with data in the db. It is applied to results lived in the cursor. so we use the cursor methods after find().</p>
+  </li>
+  <li>
+    <p>if use both sort and limit, MongoDB assumes always sort first, then limit, regardless of the order in which you type these.</p>
+  </li>
+</ul>
+
+<p><strong>Indexing</strong></p>
+<ul>
+  <li>Why using Indexing? One of the most efficient way to improve query and sorting performance within a collection
+    <ul>
+      <li>For a collection, create an index is to construct key-value pairs, where keys are indexes, and values are the actual document corresponding to that index in an order specified when create the index. Without indexing, search is O(N), where N is the number of docs in the collection.</li>
+      <li>MongoDB uses b-tree (allows searches, sequential access, insertions, and deletions in logarithmic time) to store indexes so that the searching for specific index doesn’t need to go over the entire indexes list one by one.</li>
+    </ul>
+  </li>
+  <li>Index Overhead:
+    <ul>
+      <li>don’t create unnecessary indexes in a collection. When there is a new doc coming into the collection/being removed/being updated, one or more b-trees need to be reblanced and indexes need to be updated</li>
+    </ul>
+  </li>
+  <li>Create an Index:
+    <ul>
+      <li>we can only use index for filtering and sorting if <strong>keys in our predicates are equality conditions</strong>
+        <ul>
+          <li>e.g., index on {“name”, “address.zip”, “ssn”}, but <code class="language-plaintext highlighter-rouge">.find("name": "Judy", "address.zip": {"$gte": 100}).sort({"ssn": 1})</code>, sort will not use index because “address.zip” uses range query rather than equality query.</li>
+        </ul>
+      </li>
+      <li>single index: <code class="language-plaintext highlighter-rouge">db.&lt;collection name&gt;.createIndex({&lt;field 1&gt;: &lt;direction, e.g., 1&gt;})</code>: create an index first on the field 1 in an increasing order, then on the field 2. Similarly.</li>
+      <li>compound indexes: <code class="language-plaintext highlighter-rouge">.createIndex({&lt;field 1&gt;: &lt;direction, e.g., 1&gt;, &lt;field2&gt; : 1})</code>
+        <ul>
+          <li>for compound indexes, the index are indeed 1-dim rather than 2-dim. e.g., compound index on {last name: 1, first name: 1}, and the index key will look like {“Acevedo”, “Devin”}, {“Acosta”, “James”}, {“Bailey”, “Abigail”} etc, rather than key 1 for last name then key 2 for first name to create the 2-dim structure.</li>
+          <li>Query: for a compound index queries, it can ONLY service queries for both <strong>its compound index (the original index) and any prefix indexes</strong>. E.g., compound index { “item”: 1, “location”: 1, “stock”: 1 }, its prefix indexes are {item}, {item, location}, {item, location, stock} . Because documents are first ordered by “item”, then ordered by “location”, finally by {stock}. So query on “stock”, “location stock”. A query on “item stock”will use IXSCAN, as “item” correspond to a prefix. The query filter all items match “item” by indexing, then do a total scan on these results to match “stock”. Thus, in this case the index will not be as efficient. This means if a query omits a particular index prefix, it is unable to make use of any index fields that follow that prefix. In this case, it omits the index predix “location”.</li>
+          <li>Sort: two scenarios,
+            <ul>
+              <li>Scenario one: if no query, use index prefixes to perform sorting on index no matter what queries are.</li>
+              <li>Sceneratio two: if there is a query, perform sorting on index if query executed on all of the prefix keys that precede the sort keys</li>
+              <li>```
+  Lab 2.1 #M201
+  Given the following index: { “first_name”: 1, “address.state”: -1, “address.city”: -1, “ssn”: 1 }
+  Which of the following queries are able to use it for both filtering and sorting?</li>
+              <li>Correct: db.people.find({ “first_name”: “Jessica”, “address.state”: { $lt: “S”} }).sort({ “address.state”: 1 })</li>
+              <li>Correct: db.people.find({ “address.state”: “South Dakota”, “first_name”: “Jessica” }).sort({ “address.city”: -1 })</li>
+              <li>Incorrect: db.people.find({ “address.city”: “West Cindy” }).sort({ “address.city”: -1 })</li>
+              <li>Incorrect: db.people.find({ “first_name”: { $gt: “J” } }).sort({ “address.city”: -1 })</li>
+              <li>Correct: db.people.find({ “first_name”: “Jessica” }).sort({ “address.state”: 1, “address.city”: 1 })</li>
+            </ul>
+
+            <p>Lab 2.2
+  db.people.find({
+          “address.state”: “Nebraska”,
+          “last_name”: /^G/,
+          “job”: “Police officer”
+      })
+  db.people.find({
+      “job”: /^P/,
+      “first_name”: /^C/,
+      “address.state”: “Indiana”
+  }).sort({ “last_name”: 1 })
+  db.people.find({
+      “address.state”: “Connecticut”,
+      “birthday”: {
+      “$gte”: ISODate(“2010-01-01T00:00:00.000Z”),
+      “$lt”: ISODate(“2011-01-01T00:00:00.000Z”)
+      }
+  })
+  If you had to build one index on the people collection, which of the following indexes would best service all 3 queries?
+  { “address.state”: 1, “last_name”: 1, “job”: 1 } vs { “address.state”: 1, “job”: 1 }
+  Best: { “address.state”: 1, “last_name”: 1, “job”: 1 }
+  Reason: second one is better because while this index would be able to service all 3 of the example queries, there’s a better index that can be used on the first query, and the second query has to do an in-memory sort.
+  ```</p>
+            <ul>
+              <li>We can invert the keys of an index in our sort (-1 to 1 or 1 to -1) predicate to utilize an index by walking it backwards.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Multikey indexes: when we index a field of array, it is called the multikey index. This is called because for each value in the array, the server will create a separate index key.
+        <ul>
+          <li>can also index on nested documents. e.g., “stock” is an array of object, we could create index on “stock.quantity”.</li>
+          <li>In “explain()” output, “isMultiKey” is true/false reflect if a multikey index is used.</li>
+          <li>Can create a compound index with only one array field within. Cannot create a compound index with all fields are arries, raise “Cannot Index Parallel Arrays” error. That is because if doing so, we will have a large number of index keys, and largely affects the performance.</li>
+        </ul>
+      </li>
+      <li>Partial indexes: create indexes on some documents in the collection.
+        <ul>
+          <li>motivation: reduce index keys to reduce memory cost</li>
+          <li>e.g., <code class="language-plaintext highlighter-rouge">.createIndex({"address.city": 1, "cuisine": 1}, {partialFilterExpression: {"stars": {"$gte": 3.5}}})</code></li>
+          <li>sparse index is a special case of partial indexes. It only index on documents where the field exists, rather than creating an index key for the null value. <code class="language-plaintext highlighter-rouge">.createIndex({'stars': 1}, {sparse: true})</code></li>
+          <li>In order to use the partial indexes, the query needs to be guaranteed to match the subset of documents specified by the filter expression in the partial indexes. For example, for the partial index defined above, query like <code class="language-plaintext highlighter-rouge">.find({"address.city": "Vancouver", "cuisine": "Korean"})</code> will not use IXSCAN. Query like <code class="language-plaintext highlighter-rouge">.find({"address.city": "Vancouver", "cuisine": "Korean", "stars": {"$gte": 4}})</code> will use IXSCAN.</li>
+          <li>“_id” indexes cannot be partial indexes.</li>
+          <li>Shard key indexes cannot be partial indexes.</li>
+          <li>Partial indexes support a uniqueness constraint. However, uniqueness will be limited to the keys covered by the partial filter expression. Uniqueness constraint means <code class="language-plaintext highlighter-rouge">createIndex( { "email" : 1 }, { unique : true } )</code>.</li>
+          <li>Partial indexes support compound indexes.</li>
+        </ul>
+      </li>
+      <li>Text indexes.
+        <ul>
+          <li>text indexes are case-insensitive.</li>
+          <li><code class="language-plaintext highlighter-rouge">.createIndex({&lt;field name&gt;: "text"})</code></li>
+          <li><code class="language-plaintext highlighter-rouge">.find({$text: {$search: "MongoDB best"}})</code>: it is the corresponding text query using text index. It will find all documents of text index match “MongoDB” OR “best”, with the fact that accurate match getting higher “textScore”. <code class="language-plaintext highlighter-rouge">.find({$text: {$search: "MongoDB best"}}, {score: {$meta: "textScore"}}).sort({score: {$meta: "textScore"}})</code> to view its similarity score.</li>
+        </ul>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">.dropIndexes([&lt;field1 name&gt;, &lt;field2&gt;])</code> is to drop the existing index.</li>
+    </ul>
+  </li>
+  <li>Indexing Usage:
+    <ul>
+      <li>if query is matching docs on multiple fields, but the database only has a single field index for one of them, the database will first filter using the index and it will only look at these documents and fetch only the ones that match the other predicates. This increases the performance.</li>
+    </ul>
+  </li>
+  <li>Examine the query process: The “explain” method
+    <ul>
+      <li>what does “explain” method do? To examize if
+        <ul>
+          <li>your query using the index</li>
+          <li>your query using an index to provide a sort</li>
+          <li>your query using an index to provide the projetion</li>
+          <li>how selective is your index</li>
+          <li>which part of your plan is the most expensive.</li>
+        </ul>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">db.collection.find().explain("executionStats")</code>/<code class="language-plaintext highlighter-rouge">.explain("queryPlanner")</code>/<code class="language-plaintext highlighter-rouge">.explain("allPlansExecution")</code></li>
+      <li>look at “queryPlanner” field of output</li>
+      <li>this field has sub-fields like “winningPlan.stage”. When “winningPlan.stage”==”COLLSCAN”, means that it scans through every document in the collection. When “winningPlan.stage”==”IXSCAN”, means that it uses indexes.</li>
+      <li>sub-field “executionStats”:
+        <ul>
+          <li>“totalDocsExamined” for this query, would like “totalDocsExamined” close to “nReturned”</li>
+          <li>“totalKeysExamined”: total indexes used for this query, would like “totalKeysExamined” close to “nReturned”</li>
+          <li>if there is no “SORT” stage because the documents are already extracted using the index, and so they are already sorted, otherwise, it doesn’t sort using indexes, it is an in-memory sort.</li>
+          <li>outputs in a sharded cluster have “sharded_merge” stage with execution plans in each of the shards.</li>
+        </ul>
+      </li>
+      <li>in “explain” method, you will NOT see all the available indexes for this collection. you will be able to see the ones considered by the other plans that were rejected, but this is prossibly only a subset of all indexes.</li>
+    </ul>
+  </li>
+  <li>Sort with indexes. Sorting is time-consuming, so it’s better to use the right indexes for all queries that you sort.
+    <ul>
+      <li>If the index is created with an ascending order, and your query and sort by a descending order, it will still use the index, and your will see “IXSCAN” with direction “backward”.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>CRUD Optimization</strong></p>
+<ul>
+  <li>Optimize CRUD operations:
+    <ul>
+      <li>best practice to order index keys: when create an index, first put key field that matches equality conditions in query, then sorting key field, lastly key field that specified range inequality in query.</li>
+      <li>performance tradeoff: sometimes to be less selective to prevent an in-memory sort</li>
+    </ul>
+  </li>
+  <li>Covered Queries
+    <ul>
+      <li>what are convered queries? queries are satisfied entirely by index keys, thus 0 docs need to be examined.</li>
+      <li>cannot cover a query if
+        <ul>
+          <li>any of the indexed fields are arrays</li>
+          <li>any of the indexed fields are embedded documents</li>
+          <li>when run against a mongos if the index does not contain the shard key.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Regex Performance
+    <ul>
+      <li>how to utilize index on regex?</li>
+      <li>When it is <code class="language-plaintext highlighter-rouge">.find({"field 1": /^craftman/})</code>, (match field 1 starting with “craftman”), for this case, if there is an index of field 1, server will use IXSCAN rather than COLLSCAN.</li>
+    </ul>
+  </li>
+  <li>Aggregation Performance
+    <ul>
+      <li>when encounter a stage in the pipeline that cannot use the index, all the following stages are not able to use indexes as well. Transforming data in a pipeline stage prevents us from using indexes in the stages that follow. That’s why it’s important to put all your index using operators at the front of your pipelines!</li>
+      <li>other concepts are memtioned in the Aggregation section below.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Data Modeling</strong></p>
+<ul>
+  <li>it is a way to organize fields in a doc to support your application performance and querying capabilities.</li>
+  <li>main concern: 1. what data to store 2. how it will be quried. 
+<strong>Install mongodb on Windows</strong>
+    <ol>
+      <li>create the data folders to store your databases</li>
+      <li>setup alias shorts for mongo and mongod.</li>
+    </ol>
     <ul>
       <li>open GitBash</li>
       <li>Change dir to your home dir by <code class="language-plaintext highlighter-rouge">cd ~</code></li>
       <li>create bash_profile <code class="language-plaintext highlighter-rouge">touch .bach_profile</code></li>
       <li>put in the following in .bash_profile</li>
       <li>
-        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> alias mongod="C:/Program\ Files/MongoDB/Server/4.2/bin/mongod.exe"
- alias mongo="C:/Program\ Files/MongoDB/Server/4.2/bin/mongo.exe"
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  alias mongod="C:/Program\ Files/MongoDB/Server/4.2/bin/mongod.exe"
+  alias mongo="C:/Program\ Files/MongoDB/Server/4.2/bin/mongo.exe"
 </code></pre></div>        </div>
       </li>
       <li>verify the setup by
@@ -165,86 +536,759 @@
       </li>
     </ul>
   </li>
-</ol>
+</ul>
 
-<h2 id="bson">BSON</h2>
-<p><code class="language-plaintext highlighter-rouge">pip install bson</code>: for BSON (binary JSON) encoding and decoding</p>
+<p><strong>Install MongoDB on Mac</strong></p>
+<ul>
+  <li>Follow the <a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-enterprise-on-os-x/">steps</a>, at step 3 (Set permissions for the data and log directories.), change “my_mongodb_user” to be the username of your macbook, e.g., casiebao.</li>
+</ul>
 
-<h2 id="python-client">Python Client</h2>
-<h3 id="pymongo">Pymongo</h3>
-<p><strong>Installation</strong>
-Note: need to install bson first, then install pymongo to avoid some errors</p>
+<h2 id="mongodb-aggregation">MongoDB Aggregation</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">db.&lt;collection&gt;.aggregate([{stage 1}, {stage 2}, ...], {options})</code></li>
+  <li>aggregation operators vs query operators</li>
+  <li>Field Path: “$fieldName”, System Variable “\(UPPERCASE" (e.g.,\)ROOT	References the root document), User Variable “$$lowercase”, some expr let us temporarily bind a value to a name or provide us a special name to access some data.</li>
+  <li><strong>All except the $out, $merge, and $geoNear $indexStats stages can appear multiple times in a pipeline.</strong></li>
+</ul>
 
-<p><strong>Read</strong></p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>client = pymongo.MongoClient(uri)
-mflix = client.sample_mflix
+<p><strong>$match</strong></p>
+<ul>
+  <li>a match stage may contain a $text query operator, but it must be the first stage in a pipeline</li>
+  <li>$match should come early in an aggregation pipeline</li>
+  <li>you cannot use $where with $match</li>
+  <li>$match uses the same query syntax as find</li>
+</ul>
 
-# movies is our collection handle - it refers to the sample_mflix.movies collection
-movies = mflix.movies
-# find all movies with Salma Hayek
-# then pretty print
-cursor = movies.find( { "cast": "Salma Hayek" } )
+<p>e.g.,</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># imdb.rating is at least 7
+# genres does not contain "Crime" or "Horror"
+# rated is either "PG" or "G"
+# languages contains "English" and "Japanese"
+
+# 难点： on "rated", we cannot use "or" here, because  $in query operator validates a field's value against an array and get the documents if at least one of the element in the array matches with the field Vs $or logical operator takes in two expressions not the values and get the documents where at least one expressions is satisfied.
+
+var pipeline=[{"$match": {"imdb.rating": {"$gte": 7}, "genres": {"$nin": ["Crime", "Horror"]}, "rated": {"$in": ["PG", "G"]},"languages": {"$all":["English", "Japanese"]}}}]
+</code></pre></div></div>
+
+<p><strong>$project</strong></p>
+<ul>
+  <li>project can 1. retain fields: select the fields to display, 2. rename fields <code class="language-plaintext highlighter-rouge">db.solarSystem.aggregate([{$project: {_id: 0, name: 1, surfaceGraviry: "$gravity.value"}}])</code> 3. assign new fields. $project can be used as many times as in the aggregation pipeline.</li>
+  <li>retain fields:
+    <ul>
+      <li>use only 1s: e.g., <code class="language-plaintext highlighter-rouge">.find({query}, {&lt;field1&gt;: 1, &lt;field 2&gt;: 1})</code>: only fields specified plus “_id” field will be popped out</li>
+      <li>use only 0s: e.g., <code class="language-plaintext highlighter-rouge">.find({query}, {&lt;field1&gt;: 0, &lt;field 2&gt;: 0})</code>: fields didn’t get specified show up.</li>
+      <li>exception: e.g., .<code class="language-plaintext highlighter-rouge">find({query}, {&lt;field1&gt;: 1, "_id": 0})</code>: combined 0s and 1s only only if “_id” is included in projection.</li>
+      <li>except using 0s and 1s, aggregation also can <code class="language-plaintext highlighter-rouge">db.solarSystem.aggregate([{"$project": {"myWeight": "$myWeight"}}])</code></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">$divide: ["$gravity.value", 9.8]</code></li>
+  <li><code class="language-plaintext highlighter-rouge">$multiply: [{$divide: ["$gravity.value", 9.8]}, 86]</code></li>
+  <li><code class="language-plaintext highlighter-rouge">db.solarSystem.aggregate([{$project: {myWeight: {$multiply: [{$divide: ["$gravity.value", 9.8]}, 86]}}}]</code></li>
+  <li>$size, $split
+```
+    <h1 id="using-the-aggregation-framework-find-a-count-of-the-number-of-movies-that-have-a-title-composed-of-one-word-to-clarify-cinderella-and-3-25-should-count-where-as-cast-away-would-not">Using the Aggregation Framework, find a count of the number of movies that have a title composed of one word. To clarify, “Cinderella” and “3-25” should count, where as “Cast Away” would not.</h1>
+    <p>db.movies.aggregate([
+{
+  $match: {
+    title: {
+      $type: “string”
+    }
+  }
+},
+{
+  $project: {
+    length_of_title: { $size: 
+                          {$split: [“$title”, “ “] }
+                      },
+    _id: 0
+  }
+},
+{
+  $match: {
+    length_of_title: {$eq: 1}}
+  }
+}
+]).itcount()</p>
+  </li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+__Utility Stages__
+* addfields
+* setIntersection: intersection of two or more arraies. 
+* sample: if N&lt;=5% of num of docs in collection AND collection has &gt;= 100 docs AND $sample is the first stage, then peudo-random cursor to randomly select N docs. Elsewise, in-memory random sort, select N docs, and this sort is subject to the same memory cost as in the sort stage. 
+* size: size of an array
+
+__geoNear__
+* deal with geo JSON data
+* Note that some fields in geoNear are required. 
+* The collection can have one and only one 2dsphere index
+* If using 2dsphere, the distance is returned in meters, if using legacy coordinates, the distance is returned in radians.
+* $geoNear must be the first stage in an aggregation pipeline. 
+
+__Cursor-like stages__
+* `db.collection.aggregate([{$project}, {$limit: 5}], {allowDiskUse: true})`
+* limit(), sort(), skip(), count()
+* if sort not based on index field, it performs a in-memory sort, which are limited to 100M of RAM by default. If handling large dataset, need to add `allowDiskUse: true`. 
+
+</code></pre></div></div>
+<h1 id="chap-2-lab-1">Chap 2 Lab 1:</h1>
+<h1 id="my-mistake-miss-cast-in-match-some-documents-dont-have-a-cast-field-that-will-lead-setintersection-to-be-null-and-you-cannot-size-a-null-object">My mistake: miss cast in match, some documents don’t have a “cast” field, that will lead setIntersection to be null, and you cannot “$size” a null object.</h1>
+<p>var pipeline=[
+    {“$match”: {“countries”: {“$in”: [“USA”]}, “tomatoes.viewer.rating”: {“$gte”: 3},  “cast”: {
+      “$in”: favorites
+    }}}, 
+    {“$addFields”: {“num_favs”: {“$size”:
+                    {
+                        “$setIntersection”:[“$cast”,favorites]
+                    }}}},
+    {“$sort”: {“num_favs”: -1, “tomatoes.viewer.rating”: -1, “title”: -1}}, 
+    {“$project”: {“num_favs”: 1, “tomatoes.viewer.rating”: 1, “title”: 1}},
+    {“$skip”: 24}, 
+    {“$limit”: 1}]</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>__$group__
+* $sum
+* `$cond: [{&lt;if condition&gt;}, {&lt;then expr&gt;}, {&lt;else expr&gt;}}]`: e.g., `$cond: [{$isArray: "$directors"}, {$size: "$directors"}, 0]`: note here need to use cond on size cuz it throws an error when array field is not existed in a doc. 
+* [Accumulator operator](https://docs.mongodb.com/manual/reference/operator/aggregation/group/) is one of the following operators: e.g., avg, first, last, max, min, push, sum, stdDevSamp etc. Within $project, these operators will not carry their values forward and operator across multiple documents, thus have no memory between docs. 
+* Accumulator expressions ignore doc with a value at the specified field that isn't of the type or if the value is missing. 
+* group can be used multiple times in a pipeline
+* $addToSet
+
+</code></pre></div></div>
+<h1 id="chap-3-lab-1">Chap 3 Lab 1</h1>
+<h1 id="难点reg-exp-match-2-ways-of-truncation">难点：reg exp match, 2 ways of truncation</h1>
+<p>db.movies.aggregate([
+    {“$match”: {“awards”: /Won \d{1,2} Oscar/i}}, 
+    {“$group”: {
+        “_id”: null, 
+        “highest_rating”: {“$max”: “$imdb.rating”}, 
+        “lowest_rating”: {“$min”: “$imdb.rating”}, 
+        “average_rating”: {“$avg”: “$imdb.rating”} ,
+        “deviation”: {“$stdDevSamp”: “$imdb.rating”}
+    }}, 
+    {“$project”: 
+    {
+        “highest_rating”: 1, 
+        “lowest_rating”: 1, 
+        “average_rating”: {
+                “$trunc”: [ “$average_rating”, 4]
+                }, 
+        “deviation”: {$divide: [{
+                “$trunc”: {
+                    “$multiply”: [“$deviation”, 10000]
+                }
+            }, 10000]}
+    }}
+])</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+*`{"$group": {"_id": "$name", "count": { "$sum": 1 }}}`: count number of items in this group
+
+__Unwind__
+* $unwind only works on array values
+* there are two forms unwind, short form and long form
+* using unwind on large collection may raise memory issues, so always match first to reduce size. 
+
+</code></pre></div></div>
+<h1 id="chap-3-lab-unwind">Chap 3 Lab $unwind</h1>
+<p>db.movies.aggregate([
+    {“$match”: {“languages”: {“$all”: [“English”]}}},
+    {“$unwind”: “$cast”}, 
+    {“$group”: {
+        “_id”: “$cast”, 
+        “numFilms”: {“$sum”: 1},
+        “average”: {“$avg”: “$imdb.rating”}
+    }}, 
+    {“$sort”: {“numFilms”: -1}},
+    {“$limit”: 1}
+])</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+__$lookup__
+* "from" collection cannot be sharded
+* "from" collection must be in the same db as the current collection
+</code></pre></div></div>
+<p>db.&lt;collection 1&gt;.aggregate([
+    {$lookup: {
+        from: &lt;collection 2 to look for info to join&gt;, 
+        localField: <field from="" the="" input="" docs="">, 
+        foreignField: &lt;field from the docs of the "from" collection&gt;, 
+        as: &lt;output array field, if no matches, as will contain an empty arr, if this field already exists in the current collection, it will be overwritten&gt;
+    }])</field></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+<h1 id="final-exam-question-7">Final Exam Question 7</h1>
+<p>db.air_alliances.aggregate([
+    {“$lookup”: {
+        “from”: “air_routes”, 
+        “localField”: “airlines”, 
+        “foreignField”: “airline.name”, 
+        “as”: “airline_info” 
+    }},
+    {“$unwind”: “$airline_info”},
+    {“$match”: {“$or”: [{“airline_info.src_airport”: “JFK”, “airline_info.dst_airport”: “LHR”}, {“airline_info.src_airport”: “LHR”, “airline_info.dst_airport”: “JFK”}]}}, 
+    {“$group”: {
+        “_id”: “$name”, 
+        “carrierSet”: {“$addToSet”: “$airline_info.airline.name”}
+    }}, 
+    {“$project”: {“count”: {“$size”: “$carrierSet”}}},
+    {“$sort”: {“count”: -1}}
+])</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+<h1 id="m121-chap-3-lab-lookup">M121 Chap 3 Lab Lookup</h1>
+<p>db.air_alliances.aggregate([
+     {“$lookup”: {
+         “from”: “air_routes”, 
+         “localField”: “airlines”, 
+         “foreignField”: “airline.name”, 
+         “as”: “airline_info”
+     }}, 
+     {“$unwind”: “$airline_info”},
+     {“$match”: {
+         “airline_info.airplane”: /747|380/
+     }}, 
+     {“$group”: {
+         “_id”: “$name”, 
+         “count”: { “$sum”: 1 }
+     }}, 
+     {“$sort”: {“count”: -1}}
+     ])</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+__$graphLookup__
+* allows to look up recursively a set of documents with a defined relationship to a starting doc
+* $maxDepth takes only Long values (Long values mean 64-bit integers)
+* Say maxDepth=N, in self-lookup, that is (N+1) levels, in cross-collection lookup, that is N levels. 
+* memory allocation: graphLookUp may need to allocate a lot of memories due to its recursive nature and the complexity of lookup, so could use $allowDiskUse. Even if you use $allowDiskUse, it may also exceed the 100MB maximum allowed for the aggregation pipeline. 
+* Indexes: having "connectToField" being in indexes is a good practice. 
+* Sharding: cannot have sharding in our "from" collection. 
+* $graphLookup can be used in any position of the pipeline
+* $match will not save the resources if the matched fields are unrelated to the graphLookup. 
+</code></pre></div></div>
+<p>db.collection.aggregate([
+    {$graphLookup: {
+    from: <lookup collection="">,
+    startWith: <expr for="" value="" of="" the="" first="" document="" to="" start="" from="">
+    connectFromField: <field name="" to="" connect="" from="" for="" the="" subsequent="" queries="">
+    connectToField: <field name="" to="" connect="" for="" the="" subsequent="" queries="">
+    as: <field name="" for="" result="" array="">
+    maxDepth: &lt;optional, max num of iteration&gt;
+    depthField: &lt;optional, field name to store number of iterations to reach this node in the final result, zero for the first lookup&gt;, 
+    restrictSearchWithMatch: &lt;optional, defines a filter during lookup, lookup searches only on the items restricted by the filter specified&gt;
+    }])
+}</field></field></field></expr></lookup></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+
+__Facets: Multi-dimensional Grouping__
+* Facet: allow users to explore data by applying multiple filters
+* nested facets is not allowed
+* A single query facet: it does group any particular data dimension. e.g., `db.companies.aggregate([{'$match': {'text': {'$search': 'network'}}}, {'$sortByCount': '$category_code'}])`: 
+$sortByCount groups incoming docs coming from our match query, and then compute the counts of documents in which distinguish group, each group is a doc with two fields, `{"_id": group name, "count": count for this group}`, and display outputs by their sorted count.
+* MongoDB allows multiple $facet stages in a pipeline  
+* Manual buckets: 
+    * Bucket and group by number of employees. Results have two fields, `"_id": &lt;bucket&gt;, "count": &lt;number of employees in this bucket&gt;`. If the specified field is not a numerical type, or fall outside of these buckets, then an error arises. 
+    ```
+        db.companies.aggregate([
+            {'$match': {'founded_year': {'$gt': 1980}, 'number_of_employees': {'$ne': null}}},
+            {'$bucket': {'groupBy': '$number_of_employees', 'boundaries': [0,20,50, 100, 500, 10000, Infinity]}}
+        ])
+    ```
+    * add a "Other" field to group documents that don't have the specified field or it falls outside of the described boundaries.
+    ```
+    db.companies.aggregate([
+        {'$match': {'founded_year': {'$gt': 1980}},
+        {'$bucket': {'groupBy': '$number_of_employees', 'boundaries': [0,20,50, 100, 500, 10000, Infinity], 'default': 'Other'}}
+    ])
+    ```
+    * Must always specify at least 2 values to "boundaries"
+    * all items in the "boundaries" array must be in the same data type, boundaries items could be numerical, or strings such as ["a", "asef", "z"] as long as they have the same type. 
+    * "count" is inserted by default with no "output", but removed when "output" is specified. Outputs have two fields `"{_id": &lt;bucket value&gt;, "count": },` plus fields defined in the ouput option. For manual buckets, `&lt;bucket value&gt;` is the boundary value for this bucket; for automatic buckets, `&lt;bucket value&gt;` is `{min:, max: }` auto-generated by the system. 
+    * Automatic Buckets: 
+        * $bucketAuto accepts an optional $granularity which ensures the boundaries of all buckets adhere to a specified preferred number series. 
+        ```
+        db.companies.aggregate([
+            {'$match': {'founded_year': {'$gt': 1980}},
+            {'$bucketAuto': {'groupBy': '$number_of_employees', 'buckets': 5， 'granularity': 'R20', 'output': {'total': , 'average': }}}
+        ])
+        ```
+* Multiple Facets: The $facet stage allows several sub-pipelines to be executed to produce multiple facets. Each sub-pipeline within facet is past the exact same set of input docs that the match stage generated, and they are indep of one and another. The output for one sub-pipeline cannot be used for other sub-pipelines within facet. 
+</code></pre></div></div>
+<p>db.companies.aggregate([
+        {‘$match’: {‘founded_year’: {‘$gt’: 1980}},
+        {‘$facet’: {
+            ‘Categories’: [{‘$sortByCount’: ‘$category_code’}], 
+            ‘Employees’: [
+                {‘$match’: {‘founded_year’: {‘$gt’: 1980},
+                {‘$bucket’: {
+                    ‘groupBy’: ‘number_of_employees’,
+                    ‘boundaries’: [0,20,50], 
+                    ‘default’: ‘Other’
+                }}}}
+            ]
+        }}
+    ])</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+<h1 id="m121-chap-4-lab">M121: Chap 4. Lab</h1>
+<h1 id="how-many-movies-are-in-both-the-top-ten-highest-rated-movies-according-to-the-imdbrating-and-the-metacritic-fields">How many movies are in both the top ten highest rated movies according to the imdb.rating and the metacritic fields?</h1>
+<h1 id="every-field-in-facet-is-a-filter-so-facet-output-is-top_rating-a-list-of-items-match-rating-filter-top_metacritic-a-list-of-items-match-metacritic-filter">every field in facet is a filter, so facet output is {“Top_rating”: [a list of items match rating filter], “Top_metacritic”: [a list of items match metacritic filter]}</h1>
+<p>db.movies.aggregate([
+    {‘$match’: {‘imdb.rating’: {‘$type’: ‘double’}, ‘metacritic’: {‘$ne’: null}}},
+    {‘$facet’: 
+        {‘Top_rating’: [
+            {‘$match’: {‘imdb.rating’: {‘$type’: ‘double’}}},
+            {‘$sort’: {‘imdb.rating’: -1}},
+            {‘$project’: {‘_id’: 0, ‘imdb.rating’: 1, ‘title’: 1}},
+            {‘$limit’: 10}],
+        ‘Top_metacritic’: [
+            {‘$match’: {‘metacritic’: {‘$ne’: null}}},
+            {‘$sort’: {‘metacritic’: -1}},
+            {‘$project’: {‘_id’: 0, ‘metacritic’: 1, ‘title’: 1}},
+            {‘$limit’: 10}]
+        }
+    }, 
+    {“$project”: {“movies_in_both”: {
+        “$size”: {
+            “$setIntersection”:[“$Top_rating.title”,”$Top_metacritic.title”]
+        }
+        }} 
+    } <br />
+    ])</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+
+
+__$redact__
+* $redact stage: useful to implement access control. But is not for restricint access to a collection
+    * $$DESCEND: retain all fields at the current document level being evaluated, except for sub-documents and arrays of documents. It will instead traverse down, evaluating each level
+    * $$PRUNE: remove all fields in the current document level w/o further inspection
+    * $$KEEP: retain all fields in the current document level w/o further inspection
+* If comparing a field in a doc, the field must be present at every level using $$Descend or deciding what to do if the field is missing, otherwise, $redat throws an error. 
+
+</code></pre></div></div>
+<h1 id="a-doc-looks-like-below">A doc looks like below</h1>
+<p>{
+    …, 
+    acl: [“HR”, “Management”, “Finance”], 
+    employee_compensation: {
+        acl: [“Management”, “Finance”, “Executive”], 
+        salary: 154776, 
+        programs: {
+            acl: [“Finance”]
+        }
+    }
+}</p>
+
+<h1 id="command">command</h1>
+<p>{$cond: [{$in: [“Management”, “$acl”]}, “\(DESCEND", "\)PRUNE”]}</p>
+
+<p>it scans through this doc from outer to inner to see if the current level has “Management” in the “acl” field, 
+if it is, it descends (\(DESCEND) to the next inner level to inspect, if it is not, it returns all levels above the current level (\)PRUNE), treating the current level as if this field does not exist. So this command returns
+{
+    …, 
+    acl: [“HR”, “Management”, “Finance”], 
+    employee_compensation: {
+        acl: [“Management”, “Finance”, “Executive”], 
+        salary: 154776
+        }
+    }
+}</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+__$out__
+* will create a new collection or overwrite an exisitng unsharded collection if specified
+* create collections in the same db as the source collection
+* if a pipeline with $out errors, it will not write/create a new collection 
+* it must be the last stage of the aggregation pipeline, thus cannot use within $facet to generate many differently shaped collections. 
+* it must hornor exisitint indexes if specifying an existing collection. 
+
+__$merge__
+* last stage in the pipeline, giving yours options to specify whether whether you want to merge or insert into a new or exisiting collections in the same or different database. 
+* can merge into a new or existing collection in the same or different db
+    * `{$merge: {db: "db2", "coll": &lt;collection name&gt;}}`: a diff db
+    * `{$merge: &lt;collection name&gt;}`: current db
+* merge on 
+    * specify a "on" field `{$merge:{into: &lt;target&gt;, on: [&lt;field 1&gt;, &lt;field 2&gt;]}`
+    * default: `on: "_id"` for unsharded collection, `on: _id and shard key` for sharded collection.
+* Optional params: 
+    * `{$merge: {into: &lt;collection name&gt;, let: {itotal: "$total"}, whenNotWatched: , whenMatched: }}`
+    * whenNotWatched options: insert, discard, fail
+    * whenMatched options: merge, replace, keepExisiting, fail, [...].
+    * [...]: you can custom your option e.g., whenWatched, $addFields of $total (fields in the existing doc), with $$new.total: $$new refer to incoming document
+    * let option: how you want to call your incoming doc. here create a new field called itotal to represent the "total" field of the incoming document. Without let specified, by default, let: {new: "$$ROOT"}, that's why $$new refer to the incoming document. 
+
+__$views__
+* views are read-only.  
+* views contain no data themselves (it contain no document), they are stored aggregations that run when queried to reflect the data in the source collection (i.e., the documents "in" a view are simply the result of the defining pipeline being executed). 
+* views have some restrictions, and they cannot contain find() projection operators
+* horizontal slicing is performed with $match stage to select the number of documents
+* vertical slicing is performed with $project to reduce the number of fields returned. 
+* view performance can be increased by creating the proper indexes on the source collection. 
+* Create the view using command createView: `db.createView(&lt;view&gt;, &lt;source&gt;, &lt;pipeline&gt;, &lt;collation&gt;)`
+
+
+__$indexStats__
+* To view statistics on the index use on the orders collection, run the following aggregation operation:
+`db.orders.aggregate( [ { $indexStats: { } } ] )`, the operation returns stats regarding the use of each index for the collection, it contains info such as key (index key specification), shard (name of the shard associated with the host)
+* it must be the first stage in an aggregation pipeline, and cannot be used in "$facet" stage. 
+
+## Aggregation Performance 
+__Realtime processing vs batch processing__
+* realtime processing: provide data for applications, query performance is more important
+* batch processing: use aggregation for analytics, query performance is less important
+
+Aggregation optimization: 
+* use index as often as possible
+* index are used in the pipeline from top to bottom until a stage where it cannot use index, and the following stages will stop using index (e.g., transforming data in a pipeline stage prevents us from using indexes in the stages that follow)
+* put sort stage to front stages, put limit stage near sort stage
+* when $limit and $sort are close together, a very performant top-k sort can be performed. 
+* results are subject to 16MB document limit
+* for each stage in pipeline, therer is 100 MB of RAM limit. To mitigate it, use indexes, or allowDiskUse:true (but using disk will seriously reduce performance, so it is used in batch processing than realtime processing)
+* Explain output: `db.collection.aggregate([], {explain: true})`, from explain output, we don't want to see fetch stage under "winningPlan" because it means MongoDB needs to go to documents rather than using info from index alone. 
+* try to avoid needless projects
+* use accumulator expr, $map, $reduce, $filter in project stages if you want to group within a doc, rather than across documents, before an unwind
+* every high order array function can be implemented with $reduce if the provided expr do not meet your needs
+* the aggregation framework will auto reorder stages in certain conditions
+* causing a merge in a sharded deployment will cause all subsequent pipeline stages to be performed in the same location as the merge
+* the aggregation framework can auto-project fields if the shape of the final document is only dependent upon those fields in the input document
+* the query in a $match stage can be entirely covered by an index. 
+
+__Aggregation pipeline on a Sharded cluster__
+* data are across different shards, so mongodb server determine which stage need to be executed in each shard, and what stages need to be executed on a single shard where the results from the other shards will be merged together. Generally, the merge will happen on a random shard. Except for $out, $faucet, $lookup, $graphLookup, for these queries, the primary shard will do the merging. If you use these operations very frequent, the primary shard requires more work loads than other shards, which reduces horizontal scaling. To mitigate, that, use a machine with more resources for your primary shard. 
+
+## MongoDB Performance
+__Hardware Consideration and Configuration__
+* Mongo uses RAM for 1. aggregation 2. index traversing 3. write operations 4. query engine 5. connections
+* MongoDB mainly uses CPU for 1. storage engine 2. concurrency model (A concurrency model specifies how threads in the the system collaborate to complete the tasks they are are given.)
+
+</code></pre></div></div>
+<h1 id="m103-lab-logging-to-a-different-facility">M103 Lab Logging to a different facility</h1>
+<p>systemLog:
+  destination: file
+  path: /var/mongodb/logs/mongod.log
+  logAppend: true</p>
+<h1 id="this-tells-mongod-to-send-logs-to-a-file-true-tells-mongod-to-append-new-entries-to-the-existing-log-file-when--the-mongod-instance-restarts">This tells mongod to send logs to a file, true tells mongod to append new entries to the existing log file when # the mongod instance restarts</h1>
+<p>processManagement:
+  fork: true</p>
+<h1 id="this-enables-a-daemon-that-runs-mongod-in-the-background-or-forks-the-process-this-frees-up-the-terminal---window-where-mongod-is-launched-from">This enables a daemon that runs mongod in the background, or “forks” the process. This frees up the terminal # # window where mongod is launched from.</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+## Basic Cluster Administration
+## The Mongod
+__Configuration file__
+* Configuration file in written in YMAL
+* How to set up configuration in command line
+    * point to your own mongod file `mongod --config "/etc/mongod.conf"`
+    * modify the default conf `mongod -f "/etc/mongod.conf"`
+
+__File Structure for /var/lib/mongodb/__
+* .wt files: collection data and index data. Even with new mongodb db, typically there are a few dbs and collections by default, so you shall always see some .wt files. 
+    * collection-x-xxxxxx.wt: collectiond ata
+    * index-x-xxxxxx.wt: index data
+
+
+__Basic Commands__
+* `db.serverStatus()`: database status
+* `db.runCommand({&lt;command&gt;})`: mongodb shell to run a database command
+
+__Logging Basics__
+* Log verbosity levels: 
+    * -1: inherit from parent
+    * 0: default verbosity to include informational messages
+    * 1-5: increases the verbosity level to include debug messages
+* access the logs: 
+    * db.adminCommand({ "getLog": "global" }) from the Mongo shell
+    * tail -f &lt;path-to-log-file&gt; from the command line
+* Log message Severity levels: Fatal, Error, Warning, Informational, Debug
+
+__Profiling the database__
+* when profiling enables, it restore data for all operations on a given database into a new collection called "db.system.profile"
+* Events captured by the profiler: 
+    * CRUD
+    * Administrative operations
+    * config operations
+
+__Basic Security__
+* You should always deploy MongoDB with security enabled, regardless of the environment.(development, evaluation, deployment etc. )
+* MongoDB security is built on Authentication and Authorization
+    * Client Authentication :
+        * SCRAM: password security
+        * X.509: uses X590 certificate for security, an option in MongoDB Extrepise. 
+        * LDAP and KERBEROS: MongoDB Enterprise only
+    * Cluster Authentication: 
+        * a secret handshake between clusters
+    * Authorization: role based access control. Each user has one or more Roles, and each Role has one or more Previleges. e.g., db admin can Create User and Create Index, and developer can Write/Read data, and data scientist can only Read data. 
+</code></pre></div></div>
+<p>#M103 Chap 1 Lab
+In command line: Connect to a mongod instance that is already running in the background on port 27000.
+mongo –host 127.0.0.1:27000</p>
+
+<p>use admin</p>
+
+<h1 id="the-requirements-for-this-new-user-are">The requirements for this new user are:</h1>
+<h1 id="role-readwrite-on-applicationdata-database">Role: readWrite on applicationData database</h1>
+<h1 id="authentication-source-admin">Authentication source: admin</h1>
+<h1 id="username-m103-application-user">Username: m103-application-user</h1>
+<h1 id="password-m103-application-pass">Password: m103-application-pass</h1>
+<p>db.createUser({
+  user: “m103-application-user”,
+  pwd: “m103-application-pass”,
+  roles : [ { role: “readWrite”, db: “applicationData” } ]
+})</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+## Python Client
+
+## BSON
+`pip install bson`: for BSON (binary JSON) encoding and decoding
+
+### Pymongo 
+__Installation__
+Note: need to install bson first, then install pymongo to avoid some errors
+
+__Read__
+</code></pre></div></div>
+<p>client = pymongo.MongoClient(uri)
+mflix = client.sample_mflix</p>
+
+<h1 id="movies-is-our-collection-handle---it-refers-to-the-sample_mflixmovies-collection">movies is our collection handle - it refers to the sample_mflix.movies collection</h1>
+<p>movies = mflix.movies</p>
+<h1 id="find-all-movies-with-salma-hayek">find all movies with Salma Hayek</h1>
+<h1 id="then-pretty-print">then pretty print</h1>
+<p>cursor = movies.find( { “cast”: “Salma Hayek” } )
 from bson.json_util import dumps
-print(dumps(cursor, indent=2))
+print(dumps(cursor, indent=2))</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* reading with `find_one()`: returns a record directly; reading with `find()`: return an iterable, need to iterating through cursors to read records. 
+* use cursor to save results as Python iterables. Note that the cursor object expires after being called once. 
+* we here use bson.json_util to dump cursor object and get it printed nicely
+* you could also use `list(cursor)` to return a list of records contained in the cursor. 
+* using "cast.actor" to project sub-field of "cast" field
+
+__Cursor Methods and Aggregation equalvalents__
+Aggregation: It is a MongoDB operation. Basically it is composed of a pipeline of operations (a list of stages of query operation dict) to query records from db. Pymongo also has aggregate methods by `&lt;collection&gt;.aggregate(&lt;pipeline list&gt;)`. 
+
+Cursor methods are methods available in pymongo. The following cursor methods have MongoDB equals: 
+* limit(n): number of outputs
+* sort([("field name", "sorting order"), (...)])
+* skip(n): skip the first n items. 
+
+__Writes__
+* insert_one: the return object contains "_id" of the inserted object, checked by `inserted_result.inserted_id`, and it tells whether the operation is acknowedged by the server, checked by `inserted_result.acknowledged` which returns a Boolean value. 
+* upsert version in updates: Sometimes, we want to update a document, but we're not sure if it exists in the collection. We can use an "upsert (meaning update and insert)" to update a document if it exists, and insert it if it does not exist.
+This operation may do one of two things:
+    * If the predicate matches a document, update the document to contain the correct data.
+    * If the document doesn't exist, create the desired document.
+    ```
+    upsert_result = vg.update_one( { "title": "Fortnite" } , { "$set": fortnite_doc }, upsert=True )
+    upsert_result.raw_result
+    ```
+    * this result object should have 'updatedExisting': True, because this operation updated an existing document. If it is insertion of a new record, 'updatedExisiting': False. 
+    * besides, ".raw_result" include information such as number of updates, operationTime, ObjectId, clusterTime etc. 
+    * "update_one({query}, {update operation}, upsert=True)". In this example, the query predicate here is { "title": "Fortnite" }. 
+    * if have multiple items in the query or update operation, put them all in the curl bracket, e.g., use the user_email and comment_id to select the proper comment, then
+    update the "text" and "date" of the selected comment. 
+    `response = db.comments.update_one(
+        { "email": user_email, "_id": ObjectId(comment_id)},
+        { "$set": { "text": text , "date": date}}
+    )`
+* updates: update operation (update_one, update_many) return a UpdateResult. acknowledged, matched_count, modified_count, and upserted_id. modified_count and matched_count will be 0 in the case of an upsert.  
+
+__Write concerns__
+{w: n}: where n is the number of nodes get committed before the client receives acknowledgement. 
+* {w: 1}: default writeConcern, it makes sure writes have been commited by at least 1 node. 
+* {w: 'marjority'}: requests acknowledgement made from server to client if the majority of nodes in the replica set applied the write from the primary db. It takes longer than {w:1}, and it is more durable because it ensures vital writes are majority-committed. 
+* {w: 0}: don't request an acknowledgement that any nodes applied the write (i.e., client could get acknowledgement before data is actually written to any db - primary or secondary dbs). It is fastest writeConcern level, and least durable. 
+
+Set write concern
+* for client-wise: `client = MongoClient(w="majority"), then check client.write_concern -&gt; WriteConcern(w=majority)`
+* for db: `from pymongo import WriteConcern, db = client.get_database("my_database",write_concern=WriteConcern(w="majority"))`
+* for collection `from pymongo import WriteConcern coll2 = collection.with_options(write_concern=WriteConcern(w="majority"))
+oid = coll2.insert({"a": 2})`
+
+__Bulk writes__
+
+Main idea: you have a sequence of write operations, each depending on preceding ones, if send them one by one will cause a lot of latencies, thus bulk them together, send the entire batch to MongoDB and get only one acknowledge back for the whole batch. Make multiple writes more efficient. 
+
+* Ordered Bulk Write: 
+    * default in Mongo
+    * it executes write sequentially, will end execution after first write failure. 
+* Unordered Bulk Write: 
+    * has to specify with the flag "{ordered: false}"
+    * executes writes in parallel
+    * single failure won't prevent other writes from proceeding 
+
+An example of ordered bulk write in pymongo: 
+</code></pre></div></div>
+<p>bulk_updates = [UpdateOne(
+        {“_id”: movie.get(“doc_id”)},
+        {“$set”: {“lastupdated”: movie.get(“lastupdated”)}}
+    ) for movie in movies_to_migrate]</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># here's where the bulk operation is sent to MongoDB
+bulk_results = mflix.movies.bulk_write(bulk_updates) ``` * bulk_updates: a sequence/list of pymongo operations * use "bulk_write" to feed in bulk_updates. 
+</code></pre></div></div>
+
+<p><strong>Join</strong></p>
+<ul>
+  <li>“let” allows us to declare variables in our pipeline, referring to document fields in our source collection</li>
+</ul>
+
+<p>An example of pipeline that finds movies of certain id (pipeline stage 1), and aggregate comments from comments collection by joining its movie_id with id from movies collection, and returns comments are saved in an array as the “comments” field under each doc in movies collection. (lookup pipeline stage 1), all comments is ordered in the descending order in the array (lookup pipeline stage 2).</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pipeline = [
+            {
+                "$match": {
+                    "_id": ObjectId(id)
+                }
+            }
+        ]
+        pipeline.extend([
+            {
+                '$lookup': {
+                    'from': 'comments', 
+                    'let': {'id': '$_id'}, 
+                    'pipeline': [
+                        {
+                            '$match': {'$expr': {'$eq': ['$movie_id', '$$id']}}
+                        }, 
+                        {
+                            '$sort': {'date': -1}
+                        }
+                    ], 
+                    'as': 'comments'
+                }
+            }, 
+            ])
+
+        movie = db.movies.aggregate(pipeline).next()
+</code></pre></div></div>
+
+<p><strong>Aggregation: Group and Sort and Limit</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pipeline = [
+    {
+        '$group': {
+            '_id': '$email', 
+            'count': {'$sum': 1}
+        }
+    }, 
+    {'$sort': {'count': -1}},
+    {'$limit': 20}
+    ]
 </code></pre></div></div>
 <ul>
-  <li>reading with <code class="language-plaintext highlighter-rouge">find_one()</code>: returns a record directly; reading with <code class="language-plaintext highlighter-rouge">find()</code>: return an iterable, need to iterating through cursors to read records.</li>
-  <li>use cursor to save results as Python iterables. Note that the cursor object expires after being called once.</li>
-  <li>we here use bson.json_util to dump cursor object and get it printed nicely</li>
-  <li>you could also use <code class="language-plaintext highlighter-rouge">list(cursor)</code> to return a list of records contained in the cursor.</li>
-  <li>using “cast.actor” to project sub-field of “cast” field</li>
+  <li>group “comments” collection by user email, select top 20 most commented users. return a list “_id: email, count: <counts>".</counts></li>
 </ul>
 
-<p><strong>Cursor Methods and Aggregation equalvalents</strong>
-Aggregation: It is a MongoDB operation. Basically it is composed of a pipeline of operations (a list of stages of query operation dict) to query records from db. Pymongo also has aggregate methods by <code class="language-plaintext highlighter-rouge">&lt;collection&gt;.aggregate(&lt;pipeline list&gt;)</code>.</p>
-
-<p>Cursor methods are methods available in pymongo. The following cursor methods have MongoDB equals:</p>
+<p><strong>Delete</strong></p>
 <ul>
-  <li>limit(n): number of outputs</li>
-  <li>sort([(“field name”, “sorting order”), (…)])</li>
-  <li>skip(n): skip the first n items.</li>
+  <li>The number of documents deleted can be viewed via “deleted_count” property on the DeleteResult object returned from the delete operation.</li>
 </ul>
 
-<p><strong>Writes</strong></p>
+<p><strong>Read Concern</strong></p>
+
+<p>The concern happens when the primary node writes the data, and not yet to pass to the secondary nodes. The primary suddenly goes down, and one of the secondary node becomes a primary and the primary becomes a secondary. Then the data rolls back to match the secondary db to the state of the primary db.</p>
+
 <ul>
-  <li>insert_one: the return object contains “_id” of the inserted object, checked by <code class="language-plaintext highlighter-rouge">inserted_result.inserted_id</code>, and it tells whether the operation is acknowedged by the server, checked by <code class="language-plaintext highlighter-rouge">inserted_result.acknowledged</code> which returns a Boolean value.</li>
-  <li>upsert: Sometimes, we want to update a document, but we’re not sure if it exists in the collection. We can use an “upsert” to update a document if it exists, and insert it if it does not exist.
-This operation may do one of two things:
+  <li>default read is “local”, meaning that it reads whatever copy of the data in the primary node regardless of whether or not the other nodes have replicated the data.</li>
+  <li>the read concern “majority: allows for more durable reads (meaning that slimly likely to be a rollback), it only returns data that has been replicated to a majority of nodes. e.g., the primary node is on 666, but two secondary nodes are still on 665, then reads will return 655 on a 3-node system as majority nodes are still at this state.</li>
+  <li>Integer values are not valid read concerns.</li>
+  <li>in pymongo, <code class="language-plaintext highlighter-rouge">rc = pymongo.read_concern.ReadConcern(level='majority')
+  comments = db.comments.with_options(read_concern=rc)</code>, rc level must be a ReadConcern object.</li>
+</ul>
+
+<p><strong>Connection Pooling</strong></p>
+<ul>
+  <li>it allows for reuse of connections</li>
+  <li>main benefits:
     <ul>
-      <li>If the predicate matches a document, update the document to contain the correct data.</li>
-      <li>If the document doesn’t exist, create the desired document.
-        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  upsert_result = vg.update_one( { "title": "Fortnite" } , { "$set": fortnite_doc }, upsert=True )
-  upsert_result.raw_result
-</code></pre></div>        </div>
-      </li>
-      <li>this result object should have ‘updatedExisting’: True, because this operation updated an existing document. If it is insertion of a new record, ‘updatedExisiting’: False.</li>
-      <li>besides, “.raw_result” include information such as number of updates, operationTime, ObjectId, clusterTime etc.</li>
-      <li>“update_one({query}, {update operation}, upsert=True)”. In this example, the query predicate here is { “title”: “Fortnite” }.</li>
+      <li>New operations can be serviced with pre-existing connections and subsequent requests appear faster to the client. The overhead of creating a TCP connection often results in waiting time, but this is avoided by reusing a connection.</li>
+      <li>A large influx of operations can be handled more quickly with a pool of existing connections. Because the application has created a lot of available connections before they are needed, it has the bandwidth to service as many requests as connections.</li>
+    </ul>
+  </li>
+  <li>by default, the connection pools are 100 connections.</li>
+  <li>connection pools are specific to a client, and the number of connections is declared when the client is initialized.</li>
+  <li>all connections in the pool are dropped after the client is terminated.</li>
+  <li>In pymongo, <code class="language-plaintext highlighter-rouge">client = MongoClient("mongodb://localhost:27017/", maxPoolSize=50)</code>, set within MongoClient</li>
+</ul>
+
+<p><strong>Robust Client Configuration</strong></p>
+<ul>
+  <li>always use connection pooling</li>
+  <li>For any writes with majority writes operation, always specify a “wtimeout”. use majority <code class="language-plaintext highlighter-rouge">{w: "majority", wtimeout: 5000}</code>, timeout is in milli-sec. “wtimeout” is only relevant to write concern, not to read concern, connection pools etc.</li>
+  <li>always configure for and handle “serverSelectionTimeout” errors. by default, serverSelectionTimeout is 30 secs.</li>
+</ul>
+
+<p>Setting timeouts (e.g., serverSelectionTimeout, wtimeout etc) will make us aware of any software/hardware problems that haven’t been recovered in an adquate amount of time.</p>
+
+<p>For example, wtimeout is specified in MongoClient as below <code class="language-plaintext highlighter-rouge">db = MongoClient(MFLIX_DB_URI,wTimeoutMS = 2500)[MFLIX_DB_NAME]</code></p>
+
+<p><strong>Error Handling</strong></p>
+<ul>
+  <li>same strategy as in normal python scripts, use “try except” code block.</li>
+  <li>When handling errors, determine how fatal this error is. can we react to this error in a useful way? (e.g., analyze errors in “except” block.) if this is really fatal, we need to return it back to the user?</li>
+  <li>The exact exception that will be thrown in this cases: <a href="https://pymongo.readthedocs.io/en/stable/api/pymongo/errors.html">pymongo</a>, <a href="https://pymongo.readthedocs.io/en/stable/api/bson/errors.html">BSON</a></li>
+</ul>
+
+<p><strong>Principle of Least Privilege</strong></p>
+
+<p>Main idea: every program/user of the system should operate using the least amount of necessary to complete the job.</p>
+
+<p>Consider what kinds of users and what permission they will have:</p>
+<ul>
+  <li>application users: that log into the application itself</li>
+  <li>database users:
+    <ul>
+      <li>admin database users can create indexes, import data and so on.</li>
+      <li>application database users only have privileges they require (i.e., apply operations against database).</li>
     </ul>
   </li>
 </ul>
 
-<p><strong>Write concerns</strong>
-{w: n}: where n is the number of nodes get committed before the client receives acknowledgement.</p>
+<p><strong>Change Streams</strong></p>
 <ul>
-  <li>{w: 1}: default writeConcern, it makes sure writes have been commited by at least 1 node.</li>
-  <li>{w: ‘marjority’}: requests acknowledgement made from server to client if the majority of nodes in the replica set applied the write from the primary db. It takes longer than {w:1}, and it is more durable because it ensures vital writes are majority-committed.</li>
-  <li>{w: 0}: don’t request an acknowledgement that any nodes applied the write (i.e., client could get acknowledgement before data is actually written to any db - primary or secondary dbs). It is fastest writeConcern level, and least durable.</li>
+  <li>report changes in the collection level</li>
+  <li>accept pipelines to transform change events.</li>
+  <li>Change streams can stay open indefinitely.</li>
 </ul>
 
-<p>Set write concern</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>try:
+    with inventory.watch(full_document='updateLookup') as change_stream_cursor:
+        for data_change in change_stream_cursor:
+            print(data_change)
+except pymongo.errors.PyMongoError:
+    print('Change stream closed because of an error.')
+</code></pre></div></div>
 <ul>
-  <li>for client-wise: <code class="language-plaintext highlighter-rouge">client = MongoClient(w="majority"), then check client.write_concern -&gt; WriteConcern(w=majority)</code></li>
-  <li>for db: <code class="language-plaintext highlighter-rouge">from pymongo import WriteConcern, db = client.get_database("my_database",write_concern=WriteConcern(w="majority"))</code></li>
-  <li>for collection <code class="language-plaintext highlighter-rouge">from pymongo import WriteConcern coll2 = collection.with_options(write_concern=WriteConcern(w="majority"))
-oid = coll2.insert({"a": 2})</code>
-    <h2 id="motor">Motor</h2>
-    <p><code class="language-plaintext highlighter-rouge">pip install motor</code>: asyc python driver for mongoDB
+  <li>it watches “inventory” collection and</li>
+</ul>
+
+<h2 id="mongodb-compass">MongoDB Compass</h2>
+
+<p><strong>Indexes Tab</strong></p>
+<ul>
+  <li>shows available indexes in the collection, and their performance.</li>
+</ul>
+
+<p><strong>Aggregation Tab</strong>
+Users can specify aggregation under “aggragation” tab, and export pipeline codes to language by clicking the “export” button.</p>
+
+<p><strong>Explain Plan Tab</strong></p>
+<ul>
+  <li>use this to evaluate the performance of query (read and write speed)</li>
+</ul>
+
+<p><strong>Schema Tab</strong></p>
+<ul>
+  <li>shows the basic analysis for each field: e.g., range, creation time etc.</li>
+</ul>
+
+<h2 id="motor">Motor</h2>
+<p><code class="language-plaintext highlighter-rouge">pip install motor</code>: asyc python driver for mongoDB
 <code class="language-plaintext highlighter-rouge">client = motor.motor_asyncio.AsyncIOMotorClient(Databse_URL)</code>: create a new connection to a single MongoDB instance at host:port (database_url)</p>
-  </li>
-</ul>
 
-<h3 id="get-database">Get database</h3>
+<p><strong>Get database</strong></p>
 <ul>
   <li><code class="language-plaintext highlighter-rouge">client.&lt;database name&gt;</code> or <code class="language-plaintext highlighter-rouge">client['database_name']</code>: a single instance of MongoDB can support multiple independent databases.</li>
 </ul>
@@ -315,19 +1359,6 @@ Why replicate: - disaster recovery, allow you to recover data from hardware trou
   <li>Using ObjectId is efficient for indexing (means querying documents) and sorting.</li>
 </ol>
 
-<h3 id="connection-pooling">Connection Pooling</h3>
-<ul>
-  <li>it allows for reuse of connections</li>
-  <li>main benefits:
-    <ul>
-      <li>New operations can be serviced with pre-existing connections and subsequent requests appear faster to the client. The overhead of creating a TCP connection often results in waiting time, but this is avoided by reusing a connection.</li>
-      <li>A large influx of operations can be handled more quickly with a pool of existing connections. Because the application has created a lot of available connections before they are needed, it has the bandwidth to service as many requests as connections.</li>
-    </ul>
-  </li>
-  <li>by default, the connection pools are 100 connections.</li>
-  <li>connection pools are specific to a client, and the number of connections is declared when the client is initialized.</li>
-  <li>all connections in the pool are dropped after the client is terminated.</li>
-</ul>
 
   </section>
 </article>
@@ -337,9 +1368,9 @@ Why replicate: - disaster recovery, allow you to recover data from hardware trou
    
    <div class="read-more-item">
        <span class="read-more-item-dim">Latest Articles</span>
-       <h2 class="post-list__post-title post-title"><a href="/2020/05/pytest/" title="link to pytest">pytest</a></h2>
-       <p class="excerpt">Pytest can be used in many cases in the project for unit testings. For example, in MAFEA, we use it to verify our schema written in pydantic classes. In MongoDB M220 class, we use the pytest to ver...&hellip;</p>
-       <div class="post-list__meta"><time datetime="2020-05-03 11:18:12 -0700" class="post-list__meta--date date">2020-05-03</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2020/05/pytest/>Read More</a></div>
+       <h2 class="post-list__post-title post-title"><a href="/2020/05/Life/" title="link to Life">Life</a></h2>
+       <p class="excerpt">About Painting Wall  wall color: Canadian Tire Premier brand color code:Sunbeam, type “eggshell”  small can: $25.99, can only afford 1-1.5 layer of hallway plus 2 layers of bedroom wall  paint is e...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2020-05-02 11:18:12 -0700" class="post-list__meta--date date">2020-05-02</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2020/05/Life/>Read More</a></div>
    </div>
    
    
@@ -358,7 +1389,7 @@ Why replicate: - disaster recovery, allow you to recover data from hardware trou
             <section class="footer">
     <footer></footer>
     
-        <span class="footer__copyright"> &copy; 2020 Casie Bao</span>
+        <span class="footer__copyright"> &copy; 2021 Casie Bao</span>
     </footer>
 </section>
 
