@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.18.1/lib/index.min.js">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markdown-it-texmath@0.6.5/css/texmath.css">
+<link rel="stylesheet" href="https://gitcdn.xyz/repo/goessner/mdmath/master/css/vscode-texmath.css">
+
+</head>
+<body class="markdown-body">
+
+<h3 id="select-1" data-line="7" class="code-line">SELECT</h3>
+<pre><code data-line="8" class="code-line"><code><div>SELECT column1, column2, ... FROM table_name;
+SELECT * FROM table_name;
+</div></code></code></pre>
+<h3 id="select-distinct-1" data-line="13" class="code-line">SELECT DISTINCT</h3>
+<ul>
+<li data-line="14" class="code-line">statement is used to return only distinct (different) values.</li>
+</ul>
+<pre><code data-line="15" class="code-line"><code><div>SELECT DISTINCT column1, column2, ... FROM table_name;
+</div></code></code></pre>
+<h3 id="where-1" data-line="19" class="code-line">WHERE</h3>
+<pre><code data-line="20" class="code-line"><code><div>SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+</div></code></code></pre>
+<pre><code data-line="25" class="code-line"><code><div>SELECT * FROM CITY WHERE Country='Mexico';
+</div></code></code></pre>
+<h3 id="and-not-or-1" data-line="28" class="code-line">AND, NOT, OR</h3>
+<pre><code data-line="29" class="code-line"><code><div>SELECT column1, column2, ...
+FROM table_name
+WHERE condition1 AND condition2 AND condition3 ...;
+
+SELECT column1, column2, ...
+FROM table_name
+WHERE NOT condition1 AND condition2 AND condition3 ...;
+</div></code></code></pre>
+<h3 id="substring-1" data-line="39" class="code-line">SUBSTRING</h3>
+<pre><code data-line="40" class="code-line"><code><div>SUBSTRING (&lt;Column&gt;, &lt;Start&gt; , &lt;Length&gt; ) 
+</div></code></code></pre>
+<h3 id="in-1" data-line="44" class="code-line">IN</h3>
+<ul>
+<li data-line="45" class="code-line">case-insensitive</li>
+</ul>
+<pre><code data-line="46" class="code-line"><code><div>SELECT column_name(s)
+FROM table_name
+WHERE column_name IN (value1, value2, ...);
+</div></code></code></pre>
+<p data-line="52" class="code-line">e.g., HackerRank SQL Weather Observation Station 8-11</p>
+<pre><code data-line="53" class="code-line"><code><div># Query the non-depulicated list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. 
+SELECT DISTINCT CITY FROM STATION WHERE SUBSTR(CITY, 1, 1) IN ('A', 'E', 'I', 'O', 'U'); 
+
+# Query the list of CITY names ending with vowels (a, e, i, o, u) from STATION. Your result cannot contain duplicates.
+# index -1 only works in MySQL
+SELECT DISTINCT CITY FROM STATION WHERE SUBSTR(CITY, -1, 1) IN ('A', 'E', 'I', 'O', 'U'); 
+
+# Query the non-depulicated list of CITY names NOT starting with vowels (i.e., a, e, i, o, or u) from STATION.
+SELECT DISTINCT CITY FROM STATION WHERE SUBSTR(CITY, 1, 1) NOT IN ('A', 'E', 'I', 'O', 'U'); 
+</div></code></code></pre>
+<h3 id="collate-1" data-line="65" class="code-line">COLLATE</h3>
+<ul>
+<li data-line="66" class="code-line">You can make your query case sensitive by making use of the COLLATE keyword.</li>
+</ul>
+<pre><code data-line="67" class="code-line"><code><div>SELECT A 
+FROM MyTbl 
+WHERE A COLLATE Latin1_General_CS_AS = 'ABCdef'
+</div></code></code></pre>
+<h3 id="order-by-1" data-line="73" class="code-line">ORDER BY</h3>
+<pre><code data-line="74" class="code-line"><code><div>SELECT column1, column2, ...
+FROM table_name
+ORDER BY column1, column2, ... ASC|DESC;
+</div></code></code></pre>
+<h3 id="count-sum-avg-floor-ceil-max-min-round-power-sqrt-1" data-line="80" class="code-line">COUNT, SUM, AVG, FLOOR, CEIL, MAX, MIN, ROUND, POWER, SQRT</h3>
+<ul>
+<li data-line="81" class="code-line">Only used in selection block</li>
+<li data-line="82" class="code-line">'Is' is one equal sign &quot;=&quot;, not two &quot;==&quot;</li>
+</ul>
+<pre><code data-line="84" class="code-line"><code><div># Query a count of the number of cities in CITY having a Population larger than 1000000.
+SELECT COUNT(ID)
+FROM CITY
+WHERE POPULATION&gt;100000;
+
+SELECT AVG(POPULATION)
+FROM CITY
+WHERE DISTRICT='California';
+</div></code></code></pre>
+<ul>
+<li data-line="95" class="code-line"><code>ROUND(number, decimals, operation)</code></li>
+<li data-line="96" class="code-line"><code>POWER(number, power)</code></li>
+<li data-line="97" class="code-line">HackerRank Weather Observation Station 19</li>
+</ul>
+<h3 id="replace-in-str-1" data-line="99" class="code-line">REPLACE in str</h3>
+<p data-line="100" class="code-line"><code>SELECT REPLACE('SQL Tutorial', 'T', 'M');</code>: replaces all occurrences of a substring within a string, with a new substring, the search is case-insensitive.</p>
+<pre><code data-line="102" class="code-line"><code><div># works in mysql even when salary is an integer field, not a string field
+# From the documentation &quot;In MySQL, NUMERIC is implemented as DECIMAL, so the following remarks about DECIMAL apply equally to NUMERIC.&quot;, but CAST doesn't accept NUMERIC as target type (unlike DECIMAL).
+# CAST not working in mysql here
+
+# Write a query calculating the amount of error (i.e.: correct-miscalculated average monthly salaries) from Employees db. Round to next integer
+SELECT CEIL(AVG(Salary) - AVG(REPLACE(salary, '0', '')))
+FROM EMPLOYEES;
+</div></code></code></pre>
+<h3 id="mysql-not-support-xxaxx-1" data-line="112" class="code-line">MySQL Not Support xx&lt;A&lt;xx</h3>
+<pre><code data-line="114" class="code-line"><code><div>&lt;!-- Query the sum of Northern Latitudes (LAT_N) from STATION having values greater than 38.7880 and less than 137.2345. 
+Truncate your answer to 4 decimal places.  --&gt;
+
+SELECT ROUND(SUM(LAT_N),4)
+FROM STATION
+WHERE 38.7880&lt;LAT_N AND LAT_N&lt;137.2345;
+</div></code></code></pre>
+<p data-line="123" class="code-line">NOT working when write <code>38.7880&lt;LAT_N&lt;137.2345</code>.</p>
+<h3 id="limit-1" data-line="125" class="code-line">LIMIT</h3>
+<p data-line="127" class="code-line">HackerRank: Weather Observation Station 15, 16</p>
+<pre><code data-line="129" class="code-line"><code><div># Query the Western Longitude (LONG_W) for the largest Northern Latitude (LAT_N) in STATION that is less than . Round your answer to  decimal places.
+# MySQL
+
+SELECT ROUND(LONG_W,4)
+FROM STATION
+WHERE LAT_N&lt;137.2345
+ORDER BY LAT_N DESC
+LIMIT 1; 
+</div></code></code></pre>
+<p data-line="140" class="code-line">HackerRank: Weather Observation Station 17</p>
+<pre><code data-line="142" class="code-line"><code><div># Note MIN(LAT_N) cannot be used in WHERE block
+SELECT ROUND(LONG_W, 4)
+FROM STATION 
+WHERE LAT_N&gt;38.7780
+ORDER BY LAT_N ASC
+LIMIT 1;
+</div></code></code></pre>
+<h3 id="multiple-sql-1" data-line="151" class="code-line">Multiple SQL</h3>
+<p data-line="152" class="code-line">Select second highest salary</p>
+<pre><code data-line="154" class="code-line"><code><div># Write your MySQL query statement below
+SELECT MAX(Salary) AS SecondHighestSalary FROM Employee 
+WHERE Salary &lt; (SELECT MAX(Salary) FROM Employee)
+</div></code></code></pre>
+
+</body></html>

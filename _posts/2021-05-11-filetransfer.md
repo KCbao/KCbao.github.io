@@ -13,6 +13,12 @@ categories: FTP, SFTP
 * It leverages SSH (Secure Socket Shell or Secure Shell)
 * Secure FTP also compresses all data during the transmission, which can result in faster file transfers.
 
+## SCP (Secure Copy)
+* can copy from your local system to a remote system, from a remote system to your local system, between two remote systems from your local system
+* in WSL2, `scp <C:/Desktop/local file> an12344@wip12234.eng.xxx.ca:<folder to copy to>`
+
+## FileZilla (Tool has GUI)
+* set a `new Site`, and type in your `Host`, `Protocol(often use SFTP)`, enter Login `User` and `Password`. 
 
 ## Tool
 * [Accellion](https://www.accellion.com/company/careers/)
